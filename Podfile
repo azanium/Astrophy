@@ -11,7 +11,6 @@ target 'Astro' do
   pod 'Kingfisher'
   pod 'SnapKit'
   pod 'Hue'
-  pod 'UIImage-MARKColorizer'
   pod 'RealmSwift'
   pod 'IQKeyboardManagerSwift'
   pod 'Material'
@@ -23,10 +22,7 @@ target 'Astro' do
   pod 'FacebookLogin'
   pod 'SwiftRichString'
   pod 'ALThreeCircleSpinner'
-  pod 'JTMaterialSpinner'
   pod 'SwiftValidator', :git => 'https://github.com/jpotts18/SwiftValidator.git', :branch => 'master'
-  pod 'Firebase/Core'
-  pod 'Firebase/Messaging'
 
   target 'AstroTests' do
     inherit! :search_paths
