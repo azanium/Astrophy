@@ -6,6 +6,27 @@ target 'Astro' do
   use_frameworks!
 
   # Pods for Astro
+  pod 'Alamofire', '~> 4.4'
+  pod 'WRUserSettings', :git => 'https://github.com/azanium/WRUserSettings.git', :branch => 'master'
+  pod 'Kingfisher'
+  pod 'SnapKit'
+  pod 'Hue'
+  pod 'UIImage-MARKColorizer'
+  pod 'RealmSwift'
+  pod 'IQKeyboardManagerSwift'
+  pod 'Material'
+  pod 'KYDrawerController'
+  pod 'SVProgressHUD'
+  pod 'SCLAlertView'
+  pod 'SwiftyJSON'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'SwiftRichString'
+  pod 'ALThreeCircleSpinner'
+  pod 'JTMaterialSpinner'
+  pod 'SwiftValidator', :git => 'https://github.com/jpotts18/SwiftValidator.git', :branch => 'master'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 
   target 'AstroTests' do
     inherit! :search_paths
