@@ -16,6 +16,7 @@ import RxCocoa
 import SnapKit
 import ALThreeCircleSpinner
 import Kingfisher
+import XLActionController
 
 protocol ChannelsDisplayLogic: class
 {
@@ -38,6 +39,8 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
     var displayedMetas = Variable([ChannelMeta]())
     
     let disposeBag = DisposeBag()
+    private var sortChannelNumberAscending = true
+    private var sortChannelNameAscending = true
     
     // MARK: Object lifecycle
     
@@ -88,6 +91,11 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.register(ChannelCell.self, forCellReuseIdentifier: kCellIdentifier)
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "sort"),
+                                                                 style: .plain,
+                                                                 target: self,
+                                                                 action: #selector(showSortAction(sender:)))
+        
         setupSpinner()
     }
     
@@ -132,7 +140,6 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
     
     // MARK: Do something
     
-    //@IBOutlet weak var nameTextField: UITextField!
     
     func fetchChannels()
     {
@@ -162,11 +169,44 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
         
         self.spinner.stopAnimating()
     }
+    
+    // MARK: - Actions
+    
+    func showSortAction(sender: AnyObject) {
+        let actionController = SkypeActionController()
+        
+        actionController.addAction(Action("Sort by Channel Name", style: .default, handler: { action in
+            
+            DispatchQueue.main.async {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+                self.spinner.startAnimating()
+                self.interactor?.sortChannelNames(ascending: self.sortChannelNameAscending)
+                self.sortChannelNameAscending = !self.sortChannelNameAscending
+            }
+            
+        }))
+        
+        actionController.addAction(Action("Sort by Channel Number", style: .default, handler: { action in
+            
+            DispatchQueue.main.async {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+                self.spinner.startAnimating()
+                self.interactor?.sortChannelNumbers(ascending: self.sortChannelNumberAscending)
+                self.sortChannelNumberAscending = !self.sortChannelNumberAscending
+            }
+            
+        }))
+        
+        actionController.addAction(Action("Cancel", style: .cancel, handler: nil))
+        present(actionController, animated: true, completion: nil)
+
+    }
 }
 
 extension ChannelsViewController : UITableViewDelegate {
 
     fileprivate func setupTableRowBindings() {
+        
         
         // Bind out displayed channels to the tableview
         displayedMetas.asObservable()
@@ -180,9 +220,11 @@ extension ChannelsViewController : UITableViewDelegate {
                 cell.channelDescriptionLabel.textAlignment = meta.channelDescription == "" ? .center : .left
                 cell.channelNumberLabel.text = "Channel \(meta.channelStubNumber)"
                 
-                let imageUrl = URL(string: meta.getDefaultExtRef().value)!
-                cell.logoImageView.kf.indicatorType = .activity
-                cell.logoImageView.kf.setImage(with: ImageResource(downloadURL: imageUrl, cacheKey: imageUrl.path))
+                if meta.defaultLogo != "" {
+                    let imageUrl = URL(string: meta.defaultLogo)!
+                    cell.logoImageView.kf.indicatorType = .activity
+                    cell.logoImageView.kf.setImage(with: ImageResource(downloadURL: imageUrl, cacheKey: imageUrl.path))
+                }
             }
             .disposed(by: disposeBag)
         

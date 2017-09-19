@@ -18,10 +18,6 @@ extension UIViewController {
         return UIFont.boldSystemFont(ofSize: 16)
     }
     
-    func backgroundColor() -> UIColor {
-        return UIColor(hex: "#454545")
-    }
-    
     func useShadow() -> Bool {
         return false
     }

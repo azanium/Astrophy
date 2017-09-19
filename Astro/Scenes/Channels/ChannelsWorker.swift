@@ -155,10 +155,12 @@ extension ChannelsWorker {
                         
                     }
                 }
-                
+                meta.defaultLogo = meta.getDefaultExtRef().value
                 channels += [meta]
             }
         }
+        
+        
         
         return channels
     }

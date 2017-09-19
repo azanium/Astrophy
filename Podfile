@@ -25,6 +25,7 @@ target 'Astro' do
   pod 'SwiftValidator', :git => 'https://github.com/jpotts18/SwiftValidator.git', :branch => 'master'
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'XLActionController'
 
   target 'AstroTests' do
     inherit! :search_paths

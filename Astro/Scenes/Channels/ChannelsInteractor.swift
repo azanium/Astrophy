@@ -15,16 +15,20 @@ import UIKit
 protocol ChannelsBusinessLogic
 {
     func fetchChannels(request: Channels.List.Request)
+    func sortChannelNumbers(ascending: Bool)
+    func sortChannelNames(ascending: Bool)
 }
 
 protocol ChannelsDataStore
 {
+    var channelMetas: [ChannelMeta] { get set }
 }
 
 class ChannelsInteractor: ChannelsBusinessLogic, ChannelsDataStore
 {
     var presenter: ChannelsPresentationLogic?
     var worker: ChannelsWorker? = ChannelsWorker()
+    var channelMetas: [ChannelMeta] = [ChannelMeta]()
     
     // MARK: Do something
     
@@ -54,6 +58,7 @@ class ChannelsInteractor: ChannelsBusinessLogic, ChannelsDataStore
         worker?.fetchChannelMetas(ids: ids) { [weak self] (response) in
             switch response {
             case .success(let channelMetas):
+                self?.channelMetas = channelMetas
                 let resp = Channels.Metadata.Response(metas: channelMetas)
                 self?.presenter?.presentChannelMetas(response: resp)
                 
@@ -62,5 +67,17 @@ class ChannelsInteractor: ChannelsBusinessLogic, ChannelsDataStore
                 self?.presenter?.presentChannelsError(response: resp)
             }
         }
+    }
+    
+    func sortChannelNumbers(ascending: Bool) {
+        channelMetas.sort { ascending ? $0.0.channelStubNumber < $0.1.channelStubNumber : $0.0.channelStubNumber > $0.1.channelStubNumber }
+        let response = Channels.Metadata.Response(metas: channelMetas)
+        self.presenter?.presentChannelMetas(response: response)
+    }
+    
+    func sortChannelNames(ascending: Bool) {
+        channelMetas.sort { ascending ? $0.0.channelTitle < $0.1.channelTitle : $0.0.channelTitle > $0.1.channelTitle }
+        let response = Channels.Metadata.Response(metas: channelMetas)
+        self.presenter?.presentChannelMetas(response: response)
     }
 }

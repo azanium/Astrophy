@@ -19,6 +19,7 @@ class ChannelMeta: Object {
     open dynamic var channelCategory: String = ""
     open dynamic var channelStubNumber: String = ""
     open var extRef = List<ChannelExtRef>()
+    open var defaultLogo = ""
     
     override open static func primaryKey() -> String? {
         return "channelId"
@@ -35,5 +36,9 @@ class ChannelMeta: Object {
         }
         
         return result
+    }
+    
+    override static func ignoredProperties() -> [String] {
+      return ["defaultLogo"]
     }
 }
