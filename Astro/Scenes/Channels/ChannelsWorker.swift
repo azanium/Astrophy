@@ -129,8 +129,8 @@ extension ChannelsWorker {
                     meta.channelCategory = channelCategory
                 }
                 
-                if let channelCategory = channelJson["channelCategory"].string {
-                    meta.channelCategory = channelCategory
+                if let channelStubNumber = channelJson["channelStbNumber"].string {
+                    meta.channelStubNumber = channelStubNumber
                 }
                 
                 if let extRefArray = channelJson["channelExtRef"].array {
@@ -143,7 +143,7 @@ extension ChannelsWorker {
                             extRef.system = system
                         }
                         
-                        if let subSystem = extRefJson["system"].string {
+                        if let subSystem = extRefJson["subSystem"].string {
                             extRef.subSystem = subSystem
                         }
                         

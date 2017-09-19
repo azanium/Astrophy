@@ -52,6 +52,10 @@ class MainViewController: UIViewController, MainDisplayLogic
         router.dataStore = interactor
     }
     
+    private func setupUI() {
+        self.decorateNavigationBar()
+    }
+    
     // MARK: Routing
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -69,6 +73,8 @@ class MainViewController: UIViewController, MainDisplayLogic
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {

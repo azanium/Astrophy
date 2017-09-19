@@ -26,7 +26,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="07Z-5d-TMO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2857.5" y="491.19718309859155"/>
+            <point key="canvasLocation" x="1860" y="490"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="dbR-Nv-uLv">
@@ -84,11 +84,11 @@
             </objects>
             <point key="canvasLocation" x="920.79999999999995" y="-228.03598200899552"/>
         </scene>
-        <!--Item-->
+        <!--Channels-->
         <scene sceneID="gR2-Df-W8q">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zhX-kj-gR1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="2cz-DK-z9C"/>
+                    <tabBarItem key="tabBarItem" title="Channels" image="channels" id="2cz-DK-z9C"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wgh-9r-oYe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -101,10 +101,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="es9-ZC-gGD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1860" y="491.19718309859155"/>
+            <point key="canvasLocation" x="921" y="491"/>
         </scene>
     </scenes>
     <resources>
+        <image name="channels" width="16" height="16"/>
         <image name="home" width="16" height="16"/>
     </resources>
 </document>

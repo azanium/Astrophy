@@ -23,4 +23,17 @@ class ChannelMeta: Object {
     override open static func primaryKey() -> String? {
         return "channelId"
     }
+    
+    func getDefaultExtRef() -> ChannelExtRef {
+        var result = ChannelExtRef()
+        
+        for ref in extRef {
+            if ref.system == "Logo" && ref.subSystem.contains("Neg_600x370") {
+                result = ref
+                break
+            }
+        }
+        
+        return result
+    }
 }

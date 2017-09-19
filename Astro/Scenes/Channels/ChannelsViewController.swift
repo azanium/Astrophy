@@ -14,6 +14,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+import ALThreeCircleSpinner
+import Kingfisher
 
 protocol ChannelsDisplayLogic: class
 {
@@ -27,7 +29,10 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
     var interactor: ChannelsBusinessLogic?
     var router: (NSObjectProtocol & ChannelsRoutingLogic & ChannelsDataPassing)?
     
+    fileprivate let kCellIdentifier = "ChannelCell"
+    
     var tableView: UITableView!
+    let spinner = ALThreeCircleSpinner(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
     
     var displayedChannels = Variable([Channel]()) // Not used for now
     var displayedMetas = Variable([ChannelMeta]())
@@ -66,32 +71,34 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
     
     private func setupUI() {
         
+        self.decorateNavigationBar()
+        
         // We used hardcoded UI, because Xcode 8.3.3 has bug with top layout constraint on interface builder
         tableView = UITableView()
         self.view.addSubview(tableView)
         tableView.snp.remakeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
         
+        tableView.backgroundColor = UIColor.black
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 40
         tableView.tableHeaderView = UIView(frame: CGRect.zero)
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(ChannelCell.self, forCellReuseIdentifier: kCellIdentifier)
+        
+        setupSpinner()
     }
     
-    private func setupBindings() {
-        
-        // Bind out displayed channels to the tableview
-        displayedMetas.asObservable()
-            .bind(to: tableView
-                .rx
-                .items(cellIdentifier: "Cell", cellType: UITableViewCell.self)
-            ) { (index, meta, cell) in
-                
-                cell.textLabel?.text = meta.channelTitle
-                
-            }   
-            .disposed(by: disposeBag)
-        
+    func setupSpinner() {
+        self.view.addSubview(spinner)
+        spinner.snp.remakeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalTo(44)
+            make.height.equalTo(44)
+        }
     }
     
     // MARK: Routing
@@ -114,9 +121,13 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
         
         setupUI()
         
-        setupBindings()
-        fetchChannels()
+        setupTableRowBindings()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        fetchChannels()
     }
     
     // MARK: Do something
@@ -125,6 +136,8 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
     
     func fetchChannels()
     {
+        self.spinner.startAnimating()
+        
         let request = Channels.List.Request()
         interactor?.fetchChannels(request: request)
     }
@@ -138,12 +151,46 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
     
     func displayChannelMetas(viewModel: Channels.Metadata.ViewModel)
     {
+        self.spinner.stopAnimating()
+        
         displayedMetas.value = viewModel.metas
         
         print("Channels Metas: \(displayedMetas.value.count)")
     }
     
     func displayChannelsError(viewModel: Channels.Error.ViewModel) {
-        // TODO: display error
+        
+        self.spinner.stopAnimating()
     }
+}
+
+extension ChannelsViewController : UITableViewDelegate {
+
+    fileprivate func setupTableRowBindings() {
+        
+        // Bind out displayed channels to the tableview
+        displayedMetas.asObservable()
+            .bind(to: tableView
+                .rx
+                .items(cellIdentifier: kCellIdentifier, cellType: ChannelCell.self)
+            ) { (index, meta, cell) in
+                
+                cell.channelTitleLabel.text = meta.channelTitle
+                cell.channelDescriptionLabel.text = meta.channelDescription == "" ? "No Descriptions Available" : meta.channelDescription
+                cell.channelDescriptionLabel.textAlignment = meta.channelDescription == "" ? .center : .left
+                cell.channelNumberLabel.text = "Channel \(meta.channelStubNumber)"
+                
+                let imageUrl = URL(string: meta.getDefaultExtRef().value)!
+                cell.logoImageView.kf.indicatorType = .activity
+                cell.logoImageView.kf.setImage(with: ImageResource(downloadURL: imageUrl, cacheKey: imageUrl.path))
+            }
+            .disposed(by: disposeBag)
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 200
+    }
+    
 }

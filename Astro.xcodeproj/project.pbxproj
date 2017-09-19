@@ -32,6 +32,7 @@
 		C1827F2A1F7128960057668A /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F291F7128960057668A /* ChannelCell.swift */; };
 		C1827F2C1F713E5E0057668A /* ChannelMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F2B1F713E5E0057668A /* ChannelMeta.swift */; };
 		C1827F2E1F7141F80057668A /* ChannelExtRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F2D1F7141F80057668A /* ChannelExtRef.swift */; };
+		C1827F311F716F7D0057668A /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F301F716F7D0057668A /* UIViewController+Extensions.swift */; };
 		F7017F3B7CF7284F948BBDBD /* Pods_Astro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559FD3C6868F8228E6FB0DFF /* Pods_Astro.framework */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,7 @@
 		C1827F291F7128960057668A /* ChannelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelCell.swift; path = Scenes/Channels/ChannelCell.swift; sourceTree = "<group>"; };
 		C1827F2B1F713E5E0057668A /* ChannelMeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelMeta.swift; path = Common/Models/ChannelMeta.swift; sourceTree = "<group>"; };
 		C1827F2D1F7141F80057668A /* ChannelExtRef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelExtRef.swift; path = Common/Models/ChannelExtRef.swift; sourceTree = "<group>"; };
+		C1827F301F716F7D0057668A /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		FFC5692C11FDDFABFD81A31E /* Pods-AstroTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AstroTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AstroTests/Pods-AstroTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -205,6 +207,7 @@
 		C1827F1E1F70F2430057668A /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C1827F2F1F716E7E0057668A /* Extensions */,
 				C1827F221F70FC9D0057668A /* Helpers */,
 				C1827F1F1F70F2A00057668A /* Models */,
 			);
@@ -228,6 +231,15 @@
 				C1827F231F70FCD80057668A /* NetworkManager.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		C1827F2F1F716E7E0057668A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C1827F301F716F7D0057668A /* UIViewController+Extensions.swift */,
+			);
+			name = Extensions;
+			path = Common/Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -444,6 +456,7 @@
 				C1827F261F70FD100057668A /* ApiConstants.swift in Sources */,
 				C1827F241F70FCD80057668A /* NetworkManager.swift in Sources */,
 				C1827F0F1F70E58F0057668A /* MainWorker.swift in Sources */,
+				C1827F311F716F7D0057668A /* UIViewController+Extensions.swift in Sources */,
 				C1827F281F71032B0057668A /* Channel.swift in Sources */,
 				C1827F0B1F70E58F0057668A /* MainModels.swift in Sources */,
 				C13069761F6AA20A003ED484 /* ViewController.swift in Sources */,
