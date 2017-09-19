@@ -15,6 +15,8 @@ import UIKit
 protocol ChannelsPresentationLogic
 {
     func presentChannels(response: Channels.List.Response)
+    func presentChannelMetas(response: Channels.Metadata.Response)
+    func presentChannelsError(response: Channels.Error.Response)
 }
 
 class ChannelsPresenter: ChannelsPresentationLogic
@@ -25,7 +27,17 @@ class ChannelsPresenter: ChannelsPresentationLogic
     
     func presentChannels(response: Channels.List.Response)
     {
-        let viewModel = Channels.List.ViewModel()
+        let viewModel = Channels.List.ViewModel(channels: response.channels)
         viewController?.displayChannels(viewModel: viewModel)
+    }
+    
+    func presentChannelMetas(response: Channels.Metadata.Response) {
+        let viewModel = Channels.Metadata.ViewModel(metas: response.metas)
+        viewController?.displayChannelMetas(viewModel: viewModel)
+    }
+    
+    func presentChannelsError(response: Channels.Error.Response) {
+        let viewModel = Channels.Error.ViewModel(message: response.message)
+        viewController?.displayChannelsError(viewModel: viewModel)
     }
 }

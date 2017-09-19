@@ -19,23 +19,48 @@ protocol ChannelsBusinessLogic
 
 protocol ChannelsDataStore
 {
-    //var name: String { get set }
 }
 
 class ChannelsInteractor: ChannelsBusinessLogic, ChannelsDataStore
 {
     var presenter: ChannelsPresentationLogic?
-    var worker: ChannelsWorker?
-    //var name: String = ""
+    var worker: ChannelsWorker? = ChannelsWorker()
     
     // MARK: Do something
     
     func fetchChannels(request: Channels.List.Request)
     {
-        worker = ChannelsWorker()
-        worker?.fetchChannels()
+        worker?.fetchChannels(onCompletionHandler: { [weak self] (response) in
+            
+            switch response {
+            case .success(let channels):
+                var ids = [String]()
+                for ch in channels {
+                    ids += [String(ch.id)]
+                }
+                let idList = ids.joined(separator: ",")
+                self?.fetchMetadata(ids: idList)
+                
+            case .error(let message):
+                let response = Channels.Error.Response(message: message)
+                self?.presenter?.presentChannelsError(response: response)
+            }
+            
+        })
+    }
+    
+    func fetchMetadata(ids: String) {
         
-        let response = Channels.List.Response()
-        presenter?.presentChannels(response: response)
+        worker?.fetchChannelMetas(ids: ids) { [weak self] (response) in
+            switch response {
+            case .success(let channelMetas):
+                let resp = Channels.Metadata.Response(metas: channelMetas)
+                self?.presenter?.presentChannelMetas(response: resp)
+                
+            case .error(let message):
+                let resp = Channels.Error.Response(message: message)
+                self?.presenter?.presentChannelsError(response: resp)
+            }
+        }
     }
 }

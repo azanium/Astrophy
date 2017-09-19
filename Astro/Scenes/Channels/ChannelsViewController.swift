@@ -11,16 +11,28 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import SnapKit
 
 protocol ChannelsDisplayLogic: class
 {
     func displayChannels(viewModel: Channels.List.ViewModel)
+    func displayChannelMetas(viewModel: Channels.Metadata.ViewModel)
+    func displayChannelsError(viewModel: Channels.Error.ViewModel)
 }
 
 class ChannelsViewController: UIViewController, ChannelsDisplayLogic
 {
     var interactor: ChannelsBusinessLogic?
     var router: (NSObjectProtocol & ChannelsRoutingLogic & ChannelsDataPassing)?
+    
+    var tableView: UITableView!
+    
+    var displayedChannels = Variable([Channel]()) // Not used for now
+    var displayedMetas = Variable([ChannelMeta]())
+    
+    let disposeBag = DisposeBag()
     
     // MARK: Object lifecycle
     
@@ -52,6 +64,36 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
         router.dataStore = interactor
     }
     
+    private func setupUI() {
+        
+        // We used hardcoded UI, because Xcode 8.3.3 has bug with top layout constraint on interface builder
+        tableView = UITableView()
+        self.view.addSubview(tableView)
+        tableView.snp.remakeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        
+        tableView.tableHeaderView = UIView(frame: CGRect.zero)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+    }
+    
+    private func setupBindings() {
+        
+        // Bind out displayed channels to the tableview
+        displayedMetas.asObservable()
+            .bind(to: tableView
+                .rx
+                .items(cellIdentifier: "Cell", cellType: UITableViewCell.self)
+            ) { (index, meta, cell) in
+                
+                cell.textLabel?.text = meta.channelTitle
+                
+            }   
+            .disposed(by: disposeBag)
+        
+    }
+    
     // MARK: Routing
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -69,7 +111,12 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        setupUI()
+        
+        setupBindings()
         fetchChannels()
+        
     }
     
     // MARK: Do something
@@ -84,6 +131,19 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
     
     func displayChannels(viewModel: Channels.List.ViewModel)
     {
-        //nameTextField.text = viewModel.name
+        displayedChannels.value = viewModel.channels
+        
+        print("Channels: \(displayedChannels)")
+    }
+    
+    func displayChannelMetas(viewModel: Channels.Metadata.ViewModel)
+    {
+        displayedMetas.value = viewModel.metas
+        
+        print("Channels Metas: \(displayedMetas.value.count)")
+    }
+    
+    func displayChannelsError(viewModel: Channels.Error.ViewModel) {
+        // TODO: display error
     }
 }

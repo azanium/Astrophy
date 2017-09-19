@@ -26,6 +26,12 @@
 		C1827F1B1F70E6660057668A /* ChannelsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F151F70E6660057668A /* ChannelsRouter.swift */; };
 		C1827F1C1F70E6660057668A /* ChannelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F161F70E6660057668A /* ChannelsViewController.swift */; };
 		C1827F1D1F70E6660057668A /* ChannelsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F171F70E6660057668A /* ChannelsWorker.swift */; };
+		C1827F241F70FCD80057668A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F231F70FCD80057668A /* NetworkManager.swift */; };
+		C1827F261F70FD100057668A /* ApiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F251F70FD100057668A /* ApiConstants.swift */; };
+		C1827F281F71032B0057668A /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F271F71032B0057668A /* Channel.swift */; };
+		C1827F2A1F7128960057668A /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F291F7128960057668A /* ChannelCell.swift */; };
+		C1827F2C1F713E5E0057668A /* ChannelMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F2B1F713E5E0057668A /* ChannelMeta.swift */; };
+		C1827F2E1F7141F80057668A /* ChannelExtRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F2D1F7141F80057668A /* ChannelExtRef.swift */; };
 		F7017F3B7CF7284F948BBDBD /* Pods_Astro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559FD3C6868F8228E6FB0DFF /* Pods_Astro.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +73,12 @@
 		C1827F151F70E6660057668A /* ChannelsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelsRouter.swift; path = Scenes/Channels/ChannelsRouter.swift; sourceTree = "<group>"; };
 		C1827F161F70E6660057668A /* ChannelsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelsViewController.swift; path = Scenes/Channels/ChannelsViewController.swift; sourceTree = "<group>"; };
 		C1827F171F70E6660057668A /* ChannelsWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelsWorker.swift; path = Scenes/Channels/ChannelsWorker.swift; sourceTree = "<group>"; };
+		C1827F231F70FCD80057668A /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = Common/Helpers/NetworkManager.swift; sourceTree = "<group>"; };
+		C1827F251F70FD100057668A /* ApiConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiConstants.swift; path = Common/Helpers/ApiConstants.swift; sourceTree = "<group>"; };
+		C1827F271F71032B0057668A /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Channel.swift; path = Common/Models/Channel.swift; sourceTree = "<group>"; };
+		C1827F291F7128960057668A /* ChannelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelCell.swift; path = Scenes/Channels/ChannelCell.swift; sourceTree = "<group>"; };
+		C1827F2B1F713E5E0057668A /* ChannelMeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelMeta.swift; path = Common/Models/ChannelMeta.swift; sourceTree = "<group>"; };
+		C1827F2D1F7141F80057668A /* ChannelExtRef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelExtRef.swift; path = Common/Models/ChannelExtRef.swift; sourceTree = "<group>"; };
 		FFC5692C11FDDFABFD81A31E /* Pods-AstroTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AstroTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AstroTests/Pods-AstroTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,6 +145,7 @@
 		C13069721F6AA20A003ED484 /* Astro */ = {
 			isa = PBXGroup;
 			children = (
+				C1827F1E1F70F2430057668A /* Common */,
 				C1827F031F70E5510057668A /* Scenes */,
 				C13069731F6AA20A003ED484 /* AppDelegate.swift */,
 				C13069751F6AA20A003ED484 /* ViewController.swift */,
@@ -184,8 +197,37 @@
 				C1827F151F70E6660057668A /* ChannelsRouter.swift */,
 				C1827F161F70E6660057668A /* ChannelsViewController.swift */,
 				C1827F171F70E6660057668A /* ChannelsWorker.swift */,
+				C1827F291F7128960057668A /* ChannelCell.swift */,
 			);
 			name = Channels;
+			sourceTree = "<group>";
+		};
+		C1827F1E1F70F2430057668A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C1827F221F70FC9D0057668A /* Helpers */,
+				C1827F1F1F70F2A00057668A /* Models */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		C1827F1F1F70F2A00057668A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C1827F271F71032B0057668A /* Channel.swift */,
+				C1827F2B1F713E5E0057668A /* ChannelMeta.swift */,
+				C1827F2D1F7141F80057668A /* ChannelExtRef.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		C1827F221F70FC9D0057668A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C1827F251F70FD100057668A /* ApiConstants.swift */,
+				C1827F231F70FCD80057668A /* NetworkManager.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,11 +434,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1827F2C1F713E5E0057668A /* ChannelMeta.swift in Sources */,
 				C1827F1B1F70E6660057668A /* ChannelsRouter.swift in Sources */,
+				C1827F2A1F7128960057668A /* ChannelCell.swift in Sources */,
 				C1827F1D1F70E6660057668A /* ChannelsWorker.swift in Sources */,
 				C1827F0E1F70E58F0057668A /* MainViewController.swift in Sources */,
+				C1827F2E1F7141F80057668A /* ChannelExtRef.swift in Sources */,
 				C1827F0C1F70E58F0057668A /* MainPresenter.swift in Sources */,
+				C1827F261F70FD100057668A /* ApiConstants.swift in Sources */,
+				C1827F241F70FCD80057668A /* NetworkManager.swift in Sources */,
 				C1827F0F1F70E58F0057668A /* MainWorker.swift in Sources */,
+				C1827F281F71032B0057668A /* Channel.swift in Sources */,
 				C1827F0B1F70E58F0057668A /* MainModels.swift in Sources */,
 				C13069761F6AA20A003ED484 /* ViewController.swift in Sources */,
 				C13069741F6AA20A003ED484 /* AppDelegate.swift in Sources */,

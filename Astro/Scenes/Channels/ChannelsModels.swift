@@ -24,16 +24,36 @@ enum Channels
         
         struct Response
         {
-            var id: Int = 0
-            var title: String = ""
-            var stubNumber: Int = 0
+            var channels = [Channel]()
         }
         
         struct ViewModel
         {
-            var id: Int = 0
-            var title: String = ""
-            var stubNumber: Int = 0
+            var channels = [Channel]()
+        }
+    }
+    
+    enum Metadata {
+        
+        struct Response
+        {
+            var metas = [ChannelMeta]()
+        }
+        
+        struct ViewModel
+        {
+            var metas = [ChannelMeta]()
+        }
+    }
+    
+    enum Error {
+        
+        struct Response {
+            var message: String = ""
+        }
+        
+        struct ViewModel {
+            var message: String = ""
         }
     }
 }

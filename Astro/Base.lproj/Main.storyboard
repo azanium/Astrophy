@@ -1,26 +1,110 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GDE-qw-yJ8">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Channels-->
+        <scene sceneID="y0l-x3-KZn">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="mE1-3X-PVE" customClass="ChannelsViewController" customModule="Astro" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="GQg-Lq-Pi0"/>
+                        <viewControllerLayoutGuide type="bottom" id="eGA-B2-crQ"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <view key="view" contentMode="scaleToFill" id="4X6-Fb-WBE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Channels" id="QRu-DK-n7t"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="07Z-5d-TMO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="2857.5" y="491.19718309859155"/>
+        </scene>
+        <!--Favorites-->
+        <scene sceneID="dbR-Nv-uLv">
+            <objects>
+                <viewController id="NEy-3f-4qL" customClass="MainViewController" customModule="Astro" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GgT-1J-cGP"/>
+                        <viewControllerLayoutGuide type="bottom" id="svi-k4-LKN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="heh-LR-wqX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Favorites" id="nfI-aF-zn7"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G9r-rI-Ze7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1860" y="-228.03598200899552"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="ZAb-qO-Di4">
+            <objects>
+                <tabBarController id="GDE-qw-yJ8" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="7eQ-vm-Qdq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="lf8-of-Xy2" kind="relationship" relationship="viewControllers" id="hhf-oO-oMI"/>
+                        <segue destination="zhX-kj-gR1" kind="relationship" relationship="viewControllers" id="grR-bZ-MNX"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YzW-cv-1YA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-55" y="30"/>
+        </scene>
+        <!--Favorites-->
+        <scene sceneID="qCs-Le-PmD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lf8-of-Xy2" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Favorites" image="home" id="LtJ-TF-KI4"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3X4-dU-xRf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="NEy-3f-4qL" kind="relationship" relationship="rootViewController" id="tw0-pK-Bfh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HNi-VN-wEn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="920.79999999999995" y="-228.03598200899552"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="gR2-Df-W8q">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zhX-kj-gR1" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="2cz-DK-z9C"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wgh-9r-oYe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="mE1-3X-PVE" kind="relationship" relationship="rootViewController" id="UJ6-va-9lY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="es9-ZC-gGD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1860" y="491.19718309859155"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="home" width="16" height="16"/>
+    </resources>
 </document>
