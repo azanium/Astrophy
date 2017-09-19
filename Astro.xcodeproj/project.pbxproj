@@ -14,6 +14,18 @@
 		C130697B1F6AA20A003ED484 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C130697A1F6AA20A003ED484 /* Assets.xcassets */; };
 		C130697E1F6AA20A003ED484 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C130697C1F6AA20A003ED484 /* LaunchScreen.storyboard */; };
 		C13069891F6AA20B003ED484 /* AstroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13069881F6AA20B003ED484 /* AstroTests.swift */; };
+		C1827F0A1F70E58F0057668A /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F041F70E58F0057668A /* MainInteractor.swift */; };
+		C1827F0B1F70E58F0057668A /* MainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F051F70E58F0057668A /* MainModels.swift */; };
+		C1827F0C1F70E58F0057668A /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F061F70E58F0057668A /* MainPresenter.swift */; };
+		C1827F0D1F70E58F0057668A /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F071F70E58F0057668A /* MainRouter.swift */; };
+		C1827F0E1F70E58F0057668A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F081F70E58F0057668A /* MainViewController.swift */; };
+		C1827F0F1F70E58F0057668A /* MainWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F091F70E58F0057668A /* MainWorker.swift */; };
+		C1827F181F70E6660057668A /* ChannelsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F121F70E6660057668A /* ChannelsInteractor.swift */; };
+		C1827F191F70E6660057668A /* ChannelsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F131F70E6660057668A /* ChannelsModels.swift */; };
+		C1827F1A1F70E6660057668A /* ChannelsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F141F70E6660057668A /* ChannelsPresenter.swift */; };
+		C1827F1B1F70E6660057668A /* ChannelsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F151F70E6660057668A /* ChannelsRouter.swift */; };
+		C1827F1C1F70E6660057668A /* ChannelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F161F70E6660057668A /* ChannelsViewController.swift */; };
+		C1827F1D1F70E6660057668A /* ChannelsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F171F70E6660057668A /* ChannelsWorker.swift */; };
 		F7017F3B7CF7284F948BBDBD /* Pods_Astro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559FD3C6868F8228E6FB0DFF /* Pods_Astro.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +55,18 @@
 		C13069841F6AA20B003ED484 /* AstroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C13069881F6AA20B003ED484 /* AstroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstroTests.swift; sourceTree = "<group>"; };
 		C130698A1F6AA20B003ED484 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C1827F041F70E58F0057668A /* MainInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainInteractor.swift; path = Scenes/Main/MainInteractor.swift; sourceTree = "<group>"; };
+		C1827F051F70E58F0057668A /* MainModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainModels.swift; path = Scenes/Main/MainModels.swift; sourceTree = "<group>"; };
+		C1827F061F70E58F0057668A /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainPresenter.swift; path = Scenes/Main/MainPresenter.swift; sourceTree = "<group>"; };
+		C1827F071F70E58F0057668A /* MainRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainRouter.swift; path = Scenes/Main/MainRouter.swift; sourceTree = "<group>"; };
+		C1827F081F70E58F0057668A /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Scenes/Main/MainViewController.swift; sourceTree = "<group>"; };
+		C1827F091F70E58F0057668A /* MainWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainWorker.swift; path = Scenes/Main/MainWorker.swift; sourceTree = "<group>"; };
+		C1827F121F70E6660057668A /* ChannelsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelsInteractor.swift; path = Scenes/Channels/ChannelsInteractor.swift; sourceTree = "<group>"; };
+		C1827F131F70E6660057668A /* ChannelsModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelsModels.swift; path = Scenes/Channels/ChannelsModels.swift; sourceTree = "<group>"; };
+		C1827F141F70E6660057668A /* ChannelsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelsPresenter.swift; path = Scenes/Channels/ChannelsPresenter.swift; sourceTree = "<group>"; };
+		C1827F151F70E6660057668A /* ChannelsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelsRouter.swift; path = Scenes/Channels/ChannelsRouter.swift; sourceTree = "<group>"; };
+		C1827F161F70E6660057668A /* ChannelsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelsViewController.swift; path = Scenes/Channels/ChannelsViewController.swift; sourceTree = "<group>"; };
+		C1827F171F70E6660057668A /* ChannelsWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelsWorker.swift; path = Scenes/Channels/ChannelsWorker.swift; sourceTree = "<group>"; };
 		FFC5692C11FDDFABFD81A31E /* Pods-AstroTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AstroTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AstroTests/Pods-AstroTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +133,7 @@
 		C13069721F6AA20A003ED484 /* Astro */ = {
 			isa = PBXGroup;
 			children = (
+				C1827F031F70E5510057668A /* Scenes */,
 				C13069731F6AA20A003ED484 /* AppDelegate.swift */,
 				C13069751F6AA20A003ED484 /* ViewController.swift */,
 				C13069771F6AA20A003ED484 /* Main.storyboard */,
@@ -126,6 +151,41 @@
 				C130698A1F6AA20B003ED484 /* Info.plist */,
 			);
 			path = AstroTests;
+			sourceTree = "<group>";
+		};
+		C1827F031F70E5510057668A /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				C1827F111F70E6500057668A /* Channels */,
+				C1827F101F70E5950057668A /* Main */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		C1827F101F70E5950057668A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				C1827F041F70E58F0057668A /* MainInteractor.swift */,
+				C1827F051F70E58F0057668A /* MainModels.swift */,
+				C1827F061F70E58F0057668A /* MainPresenter.swift */,
+				C1827F071F70E58F0057668A /* MainRouter.swift */,
+				C1827F081F70E58F0057668A /* MainViewController.swift */,
+				C1827F091F70E58F0057668A /* MainWorker.swift */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		C1827F111F70E6500057668A /* Channels */ = {
+			isa = PBXGroup;
+			children = (
+				C1827F121F70E6660057668A /* ChannelsInteractor.swift */,
+				C1827F131F70E6660057668A /* ChannelsModels.swift */,
+				C1827F141F70E6660057668A /* ChannelsPresenter.swift */,
+				C1827F151F70E6660057668A /* ChannelsRouter.swift */,
+				C1827F161F70E6660057668A /* ChannelsViewController.swift */,
+				C1827F171F70E6660057668A /* ChannelsWorker.swift */,
+			);
+			name = Channels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,8 +392,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1827F1B1F70E6660057668A /* ChannelsRouter.swift in Sources */,
+				C1827F1D1F70E6660057668A /* ChannelsWorker.swift in Sources */,
+				C1827F0E1F70E58F0057668A /* MainViewController.swift in Sources */,
+				C1827F0C1F70E58F0057668A /* MainPresenter.swift in Sources */,
+				C1827F0F1F70E58F0057668A /* MainWorker.swift in Sources */,
+				C1827F0B1F70E58F0057668A /* MainModels.swift in Sources */,
 				C13069761F6AA20A003ED484 /* ViewController.swift in Sources */,
 				C13069741F6AA20A003ED484 /* AppDelegate.swift in Sources */,
+				C1827F0A1F70E58F0057668A /* MainInteractor.swift in Sources */,
+				C1827F181F70E6660057668A /* ChannelsInteractor.swift in Sources */,
+				C1827F0D1F70E58F0057668A /* MainRouter.swift in Sources */,
+				C1827F1C1F70E6660057668A /* ChannelsViewController.swift in Sources */,
+				C1827F191F70E6660057668A /* ChannelsModels.swift in Sources */,
+				C1827F1A1F70E6660057668A /* ChannelsPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,6 +621,7 @@
 				C130698F1F6AA20B003ED484 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C13069901F6AA20B003ED484 /* Build configuration list for PBXNativeTarget "AstroTests" */ = {
 			isa = XCConfigurationList;
@@ -557,6 +630,7 @@
 				C13069921F6AA20B003ED484 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -23,6 +23,8 @@ target 'Astro' do
   pod 'SwiftRichString'
   pod 'ALThreeCircleSpinner'
   pod 'SwiftValidator', :git => 'https://github.com/jpotts18/SwiftValidator.git', :branch => 'master'
+  pod 'RxSwift'
+  pod 'RxCocoa'
 
   target 'AstroTests' do
     inherit! :search_paths
