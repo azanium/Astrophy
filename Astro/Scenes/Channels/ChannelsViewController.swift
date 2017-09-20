@@ -225,6 +225,28 @@ extension ChannelsViewController : UITableViewDelegate {
                     cell.logoImageView.kf.indicatorType = .activity
                     cell.logoImageView.kf.setImage(with: ImageResource(downloadURL: imageUrl, cacheKey: imageUrl.path))
                 }
+                cell.favoriteButton.isSelected = meta.isFavorite
+                cell.favoriteChanged = { favButton in
+                    
+                    favButton.isSelected = !favButton.isSelected
+                    
+                    let pref = Preferences.getPreferences()
+                    
+                    Preferences.write {
+                        if favButton.isSelected {
+                            if pref.getFavoriteIndex(of: meta) < 0 {
+                                pref.favorites.append(meta)
+                            }
+                        }
+                        else {
+                            if pref.getFavoriteIndex(of: meta) > -1 {
+                                pref.favorites.remove(objectAtIndex: index)
+                            }
+                        }
+                    }
+                    
+                    pref.save()
+                }
             }
             .disposed(by: disposeBag)
         

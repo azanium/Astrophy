@@ -32,8 +32,25 @@ class ChannelsPresenter: ChannelsPresentationLogic
     }
     
     func presentChannelMetas(response: Channels.Metadata.Response) {
-        let viewModel = Channels.Metadata.ViewModel(metas: response.metas)
-        viewController?.displayChannelMetas(viewModel: viewModel)
+        
+        DispatchQueue.global().async {
+            
+            let pref = Preferences.getPreferences()
+            for meta in response.metas {
+                for fav in pref.favorites {
+                    if meta.channelId == fav.channelId {
+                        meta.isFavorite = true
+                        break
+                    }
+                }
+            }
+            
+            DispatchQueue.main.async {
+                let viewModel = Channels.Metadata.ViewModel(metas: response.metas)
+                self.viewController?.displayChannelMetas(viewModel: viewModel)
+            }
+        }
+        
     }
     
     func presentChannelsError(response: Channels.Error.Response) {

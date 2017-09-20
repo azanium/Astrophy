@@ -9,8 +9,7 @@
 import Foundation
 import RealmSwift
 
-class ChannelExtRef: Object {
-    
+open class ChannelExtRef: Object {
     open dynamic var system: String = ""
     open dynamic var subSystem: String = ""
     open dynamic var value: String = ""

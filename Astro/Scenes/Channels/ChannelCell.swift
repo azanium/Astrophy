@@ -9,14 +9,22 @@
 import UIKit
 import Hue
 import SnapKit
+import RxCocoa
+import RxSwift
 
 class ChannelCell: UITableViewCell {
-
+    typealias ChannelFavoriteHandler = (UIButton) -> Void
+    
     var containerView = UIView()
     var logoImageView = UIImageView()
     var channelTitleLabel = UILabel()
     var channelNumberLabel = UILabel()
     var channelDescriptionLabel = UILabel()
+    var favoriteButton = UIButton()
+    
+    var favoriteChanged: ChannelFavoriteHandler?
+    
+    let disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -97,6 +105,21 @@ class ChannelCell: UITableViewCell {
         channelDescriptionLabel.numberOfLines = 0
         channelDescriptionLabel.font = UIFont.systemFont(ofSize: 15)
         channelDescriptionLabel.textColor = UIColor.darkGray
+        
+        containerView.addSubview(favoriteButton)
+        favoriteButton.snp.remakeConstraints { (make) in
+            make.top.equalToSuperview().offset(margin)
+            make.right.equalToSuperview().offset(-margin)
+            make.width.equalTo(25)
+            make.height.equalTo(25)
+        }
+        favoriteButton.setImage(UIImage(named: "favOff"), for: .normal)
+        favoriteButton.setImage(UIImage(named: "favOn"), for: .selected)
+        favoriteButton.rx.tap.bind {
+            
+            self.favoriteChanged?(self.favoriteButton)
+            
+        }.disposed(by: disposeBag)
     }
 
 }

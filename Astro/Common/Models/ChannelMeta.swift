@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class ChannelMeta: Object {
+open class ChannelMeta: Object {
     
     open dynamic var channelId: String = ""
     open dynamic var siChannelId: String = ""
@@ -18,8 +18,9 @@ class ChannelMeta: Object {
     open dynamic var channelLanguage: String = ""
     open dynamic var channelCategory: String = ""
     open dynamic var channelStubNumber: String = ""
+    open dynamic var defaultLogo: String = ""
     open var extRef = List<ChannelExtRef>()
-    open var defaultLogo = ""
+    open var isFavorite: Bool = false
     
     override open static func primaryKey() -> String? {
         return "channelId"
@@ -38,7 +39,7 @@ class ChannelMeta: Object {
         return result
     }
     
-    override static func ignoredProperties() -> [String] {
-      return ["defaultLogo"]
+    override open static func ignoredProperties() -> [String] {
+      return ["extRef", "isFavorite"]
     }
 }
