@@ -26,7 +26,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="07Z-5d-TMO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1860" y="490"/>
+            <point key="canvasLocation" x="1860" y="1140"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="dbR-Nv-uLv">
@@ -57,6 +57,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <segue destination="sUd-iL-I6j" kind="relationship" relationship="viewControllers" id="aOI-7w-oV0"/>
                         <segue destination="lf8-of-Xy2" kind="relationship" relationship="viewControllers" id="hhf-oO-oMI"/>
                         <segue destination="zhX-kj-gR1" kind="relationship" relationship="viewControllers" id="grR-bZ-MNX"/>
                     </connections>
@@ -84,6 +85,25 @@
             </objects>
             <point key="canvasLocation" x="920.79999999999995" y="-228.03598200899552"/>
         </scene>
+        <!--TV Guide-->
+        <scene sceneID="yon-uI-UjH">
+            <objects>
+                <viewController id="DMn-yc-2gx" customClass="TVGuideViewController" customModule="Astro" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jcM-AW-OuR"/>
+                        <viewControllerLayoutGuide type="bottom" id="5pP-rb-YS5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1tS-3i-6pU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="TV Guide" id="Vyp-WC-joM"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MtU-uY-ctZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1860" y="461"/>
+        </scene>
         <!--Channels-->
         <scene sceneID="gR2-Df-W8q">
             <objects>
@@ -101,11 +121,31 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="es9-ZC-gGD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="921" y="491"/>
+            <point key="canvasLocation" x="921" y="1141"/>
+        </scene>
+        <!--TV Guide-->
+        <scene sceneID="U1I-Xn-7GJ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sUd-iL-I6j" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="TV Guide" image="tvguide" id="iTW-Q7-leH"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="i51-hx-nRw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="DMn-yc-2gx" kind="relationship" relationship="rootViewController" id="Y8m-Ua-olj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jTQ-i1-rzR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="921" y="471"/>
         </scene>
     </scenes>
     <resources>
         <image name="channels" width="16" height="16"/>
         <image name="home" width="16" height="16"/>
+        <image name="tvguide" width="16" height="16"/>
     </resources>
 </document>

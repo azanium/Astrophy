@@ -14,7 +14,41 @@ import UIKit
 
 class MainWorker
 {
-    func fetchFavorites()
+    func fetchChannels(onCompletionHandler: ((ApiResponse.ChannelsResponse)->Void)?)
     {
+        NetworkManager.shared.get(url: ApiConstants.channelList,
+                                  params: nil,
+                                  headers: nil) { (response) in
+                                    
+                                    switch response {
+                                    case .Success(let result):
+                                        var channels = [Channel]()
+                                        channels = DataTransformer.transformJsonToChannels(result)
+                                        onCompletionHandler?(.success(channels: channels))
+                                        
+                                    case .Error( _, let message):
+                                        onCompletionHandler?(.error(message: message))
+                                    }
+        }
     }
+    
+    func fetchChannelMetas(ids: String, onCompletionHandler: ((ApiResponse.ChannelMetaResponse)->Void)?)
+    {
+        let url = "\(ApiConstants.channelMetas)?channelId=\(ids)"
+        NetworkManager.shared.get(url: url,
+                                  params: nil,
+                                  headers: nil) { (response) in
+                                    
+                                    switch response {
+                                    case .Success(let result):
+                                        var channels = [ChannelMeta]()
+                                        channels = DataTransformer.transformJsonToChannelMeta(result)
+                                        onCompletionHandler?(.success(channels: channels))
+                                        
+                                    case .Error( _, let message):
+                                        onCompletionHandler?(.error(message: message))
+                                    }
+        }
+    }
+
 }

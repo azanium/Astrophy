@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		A13E04314D6064C2B98DD070 /* Pods_AstroTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D682F3A6DEE26CFF4D9C7B3 /* Pods_AstroTests.framework */; };
 		C13069741F6AA20A003ED484 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13069731F6AA20A003ED484 /* AppDelegate.swift */; };
-		C13069761F6AA20A003ED484 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13069751F6AA20A003ED484 /* ViewController.swift */; };
 		C13069791F6AA20A003ED484 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C13069771F6AA20A003ED484 /* Main.storyboard */; };
 		C130697B1F6AA20A003ED484 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C130697A1F6AA20A003ED484 /* Assets.xcassets */; };
 		C130697E1F6AA20A003ED484 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C130697C1F6AA20A003ED484 /* LaunchScreen.storyboard */; };
 		C13069891F6AA20B003ED484 /* AstroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13069881F6AA20B003ED484 /* AstroTests.swift */; };
+		C17D812A1F720834003457AC /* DataTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17D81291F720834003457AC /* DataTransformer.swift */; };
 		C1827F0A1F70E58F0057668A /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F041F70E58F0057668A /* MainInteractor.swift */; };
 		C1827F0B1F70E58F0057668A /* MainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F051F70E58F0057668A /* MainModels.swift */; };
 		C1827F0C1F70E58F0057668A /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F061F70E58F0057668A /* MainPresenter.swift */; };
@@ -36,6 +36,16 @@
 		C1827F361F7176FB0057668A /* Skype.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F341F7176FB0057668A /* Skype.swift */; };
 		C1827F371F7176FB0057668A /* SkypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1827F351F7176FB0057668A /* SkypeCell.xib */; };
 		C1827F3B1F71E1670057668A /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F3A1F71E1670057668A /* Preferences.swift */; };
+		C1DE4BEF1F729E99005F89A4 /* PagedChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DE4BEE1F729E99005F89A4 /* PagedChannels.swift */; };
+		C1DE4BF11F72A079005F89A4 /* TVGuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DE4BF01F72A079005F89A4 /* TVGuideCell.swift */; };
+		C1DE4BF31F72BE15005F89A4 /* SeekerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DE4BF21F72BE15005F89A4 /* SeekerView.swift */; };
+		C1DE4BF51F72C1F8005F89A4 /* SeekerTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DE4BF41F72C1F8005F89A4 /* SeekerTimeView.swift */; };
+		C1EEE3161F7293190009E812 /* TVGuideInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EEE3101F7293190009E812 /* TVGuideInteractor.swift */; };
+		C1EEE3171F7293190009E812 /* TVGuideModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EEE3111F7293190009E812 /* TVGuideModels.swift */; };
+		C1EEE3181F7293190009E812 /* TVGuidePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EEE3121F7293190009E812 /* TVGuidePresenter.swift */; };
+		C1EEE3191F7293190009E812 /* TVGuideRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EEE3131F7293190009E812 /* TVGuideRouter.swift */; };
+		C1EEE31A1F7293190009E812 /* TVGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EEE3141F7293190009E812 /* TVGuideViewController.swift */; };
+		C1EEE31B1F7293190009E812 /* TVGuideWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EEE3151F7293190009E812 /* TVGuideWorker.swift */; };
 		F7017F3B7CF7284F948BBDBD /* Pods_Astro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559FD3C6868F8228E6FB0DFF /* Pods_Astro.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,7 +67,6 @@
 		A1004CDD055F5FC6AD0801D5 /* Pods-AstroTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AstroTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AstroTests/Pods-AstroTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C13069701F6AA20A003ED484 /* Astro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Astro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C13069731F6AA20A003ED484 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C13069751F6AA20A003ED484 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C13069781F6AA20A003ED484 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C130697A1F6AA20A003ED484 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C130697D1F6AA20A003ED484 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -65,6 +74,7 @@
 		C13069841F6AA20B003ED484 /* AstroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C13069881F6AA20B003ED484 /* AstroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstroTests.swift; sourceTree = "<group>"; };
 		C130698A1F6AA20B003ED484 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C17D81291F720834003457AC /* DataTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataTransformer.swift; path = Common/Helpers/DataTransformer.swift; sourceTree = "<group>"; };
 		C1827F041F70E58F0057668A /* MainInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainInteractor.swift; path = Scenes/Main/MainInteractor.swift; sourceTree = "<group>"; };
 		C1827F051F70E58F0057668A /* MainModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainModels.swift; path = Scenes/Main/MainModels.swift; sourceTree = "<group>"; };
 		C1827F061F70E58F0057668A /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainPresenter.swift; path = Scenes/Main/MainPresenter.swift; sourceTree = "<group>"; };
@@ -87,6 +97,16 @@
 		C1827F341F7176FB0057668A /* Skype.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skype.swift; sourceTree = "<group>"; };
 		C1827F351F7176FB0057668A /* SkypeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SkypeCell.xib; sourceTree = "<group>"; };
 		C1827F3A1F71E1670057668A /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Preferences.swift; path = Common/Models/Preferences.swift; sourceTree = "<group>"; };
+		C1DE4BEE1F729E99005F89A4 /* PagedChannels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagedChannels.swift; path = Common/Models/PagedChannels.swift; sourceTree = "<group>"; };
+		C1DE4BF01F72A079005F89A4 /* TVGuideCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuideCell.swift; sourceTree = "<group>"; };
+		C1DE4BF21F72BE15005F89A4 /* SeekerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekerView.swift; sourceTree = "<group>"; };
+		C1DE4BF41F72C1F8005F89A4 /* SeekerTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekerTimeView.swift; sourceTree = "<group>"; };
+		C1EEE3101F7293190009E812 /* TVGuideInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuideInteractor.swift; sourceTree = "<group>"; };
+		C1EEE3111F7293190009E812 /* TVGuideModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuideModels.swift; sourceTree = "<group>"; };
+		C1EEE3121F7293190009E812 /* TVGuidePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuidePresenter.swift; sourceTree = "<group>"; };
+		C1EEE3131F7293190009E812 /* TVGuideRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuideRouter.swift; sourceTree = "<group>"; };
+		C1EEE3141F7293190009E812 /* TVGuideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuideViewController.swift; sourceTree = "<group>"; };
+		C1EEE3151F7293190009E812 /* TVGuideWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuideWorker.swift; sourceTree = "<group>"; };
 		FFC5692C11FDDFABFD81A31E /* Pods-AstroTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AstroTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AstroTests/Pods-AstroTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,7 +176,6 @@
 				C1827F1E1F70F2430057668A /* Common */,
 				C1827F031F70E5510057668A /* Scenes */,
 				C13069731F6AA20A003ED484 /* AppDelegate.swift */,
-				C13069751F6AA20A003ED484 /* ViewController.swift */,
 				C13069771F6AA20A003ED484 /* Main.storyboard */,
 				C130697A1F6AA20A003ED484 /* Assets.xcassets */,
 				C130697C1F6AA20A003ED484 /* LaunchScreen.storyboard */,
@@ -177,8 +196,9 @@
 		C1827F031F70E5510057668A /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				C1827F111F70E6500057668A /* Channels */,
+				C1EEE30F1F7292FB0009E812 /* TVGuide */,
 				C1827F101F70E5950057668A /* Main */,
+				C1827F111F70E6500057668A /* Channels */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -228,6 +248,7 @@
 				C1827F2B1F713E5E0057668A /* ChannelMeta.swift */,
 				C1827F2D1F7141F80057668A /* ChannelExtRef.swift */,
 				C1827F3A1F71E1670057668A /* Preferences.swift */,
+				C1DE4BEE1F729E99005F89A4 /* PagedChannels.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -237,6 +258,7 @@
 			children = (
 				C1827F251F70FD100057668A /* ApiConstants.swift */,
 				C1827F231F70FCD80057668A /* NetworkManager.swift */,
+				C17D81291F720834003457AC /* DataTransformer.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -266,6 +288,23 @@
 				C1827F351F7176FB0057668A /* SkypeCell.xib */,
 			);
 			path = SkypeActionController;
+			sourceTree = "<group>";
+		};
+		C1EEE30F1F7292FB0009E812 /* TVGuide */ = {
+			isa = PBXGroup;
+			children = (
+				C1EEE3101F7293190009E812 /* TVGuideInteractor.swift */,
+				C1EEE3111F7293190009E812 /* TVGuideModels.swift */,
+				C1EEE3121F7293190009E812 /* TVGuidePresenter.swift */,
+				C1EEE3131F7293190009E812 /* TVGuideRouter.swift */,
+				C1EEE3141F7293190009E812 /* TVGuideViewController.swift */,
+				C1EEE3151F7293190009E812 /* TVGuideWorker.swift */,
+				C1DE4BF01F72A079005F89A4 /* TVGuideCell.swift */,
+				C1DE4BF21F72BE15005F89A4 /* SeekerView.swift */,
+				C1DE4BF41F72C1F8005F89A4 /* SeekerTimeView.swift */,
+			);
+			name = TVGuide;
+			path = Scenes/TVGuide;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -478,23 +517,33 @@
 				C1827F2A1F7128960057668A /* ChannelCell.swift in Sources */,
 				C1827F1D1F70E6660057668A /* ChannelsWorker.swift in Sources */,
 				C1827F0E1F70E58F0057668A /* MainViewController.swift in Sources */,
+				C1DE4BF31F72BE15005F89A4 /* SeekerView.swift in Sources */,
+				C17D812A1F720834003457AC /* DataTransformer.swift in Sources */,
+				C1EEE31B1F7293190009E812 /* TVGuideWorker.swift in Sources */,
 				C1827F2E1F7141F80057668A /* ChannelExtRef.swift in Sources */,
 				C1827F0C1F70E58F0057668A /* MainPresenter.swift in Sources */,
 				C1827F261F70FD100057668A /* ApiConstants.swift in Sources */,
 				C1827F241F70FCD80057668A /* NetworkManager.swift in Sources */,
+				C1EEE3161F7293190009E812 /* TVGuideInteractor.swift in Sources */,
+				C1EEE3191F7293190009E812 /* TVGuideRouter.swift in Sources */,
 				C1827F0F1F70E58F0057668A /* MainWorker.swift in Sources */,
 				C1827F3B1F71E1670057668A /* Preferences.swift in Sources */,
 				C1827F311F716F7D0057668A /* UIViewController+Extensions.swift in Sources */,
+				C1EEE3171F7293190009E812 /* TVGuideModels.swift in Sources */,
 				C1827F281F71032B0057668A /* Channel.swift in Sources */,
 				C1827F361F7176FB0057668A /* Skype.swift in Sources */,
+				C1EEE3181F7293190009E812 /* TVGuidePresenter.swift in Sources */,
+				C1DE4BF51F72C1F8005F89A4 /* SeekerTimeView.swift in Sources */,
 				C1827F0B1F70E58F0057668A /* MainModels.swift in Sources */,
-				C13069761F6AA20A003ED484 /* ViewController.swift in Sources */,
 				C13069741F6AA20A003ED484 /* AppDelegate.swift in Sources */,
 				C1827F0A1F70E58F0057668A /* MainInteractor.swift in Sources */,
+				C1DE4BF11F72A079005F89A4 /* TVGuideCell.swift in Sources */,
 				C1827F181F70E6660057668A /* ChannelsInteractor.swift in Sources */,
 				C1827F0D1F70E58F0057668A /* MainRouter.swift in Sources */,
+				C1DE4BEF1F729E99005F89A4 /* PagedChannels.swift in Sources */,
 				C1827F1C1F70E6660057668A /* ChannelsViewController.swift in Sources */,
 				C1827F191F70E6660057668A /* ChannelsModels.swift in Sources */,
+				C1EEE31A1F7293190009E812 /* TVGuideViewController.swift in Sources */,
 				C1827F1A1F70E6660057668A /* ChannelsPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -46,6 +46,16 @@ enum Channels
         }
     }
     
+    enum Favorite {
+        struct Request {
+            var meta = ChannelMeta()
+        }
+        
+        struct Response {}
+        
+        struct ViewModel {}
+    }
+    
     enum Error {
         
         struct Response {

@@ -21,6 +21,7 @@ open class ChannelMeta: Object {
     open dynamic var defaultLogo: String = ""
     open var extRef = List<ChannelExtRef>()
     open var isFavorite: Bool = false
+
     
     override open static func primaryKey() -> String? {
         return "channelId"

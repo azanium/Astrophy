@@ -15,27 +15,74 @@ import UIKit
 protocol MainBusinessLogic
 {
     func fetchFavorites(request: Main.Favorite.Request)
+    func sortChannelNumbers(ascending: Bool)
+    func sortChannelNames(ascending: Bool)
 }
 
 protocol MainDataStore
 {
-    //var name: String { get set }
+    var channelMetas: [ChannelMeta] { get set }
 }
 
 class MainInteractor: MainBusinessLogic, MainDataStore
 {
     var presenter: MainPresentationLogic?
-    var worker: MainWorker?
-    //var name: String = ""
+    var worker: MainWorker? = MainWorker()
+    var channelMetas = [ChannelMeta]()
     
     // MARK: Do something
     
-    func fetchFavorites(request: Main.Favorite.Request)
-    {
-        worker = MainWorker()
-        worker?.fetchFavorites()
+    func fetchFavorites(request: Main.Favorite.Request) {
         
-        let response = Main.Favorite.Response()
-        presenter?.presentFavorites(response: response)
+        let resp = Main.Favorite.Response()
+        self.presenter?.presentFavorites(response: resp)
+        
+        /*
+         TODO: v2
+         worker?.fetchChannels(onCompletionHandler: { [weak self] (response) in
+            
+            switch response {
+            case .success(let channels):
+                var ids = [String]()
+                for ch in channels {
+                    ids += [String(ch.id)]
+                }
+                let idList = ids.joined(separator: ",")
+                self?.fetchMetadata(ids: idList)
+                
+            case .error(let message):
+                let response = Main.Error.Response(message: message)
+                self?.presenter?.presentFavoritesError(response: response)
+            }
+            
+        })*/
+    }
+    
+    func fetchMetadata(ids: String) {
+        
+        worker?.fetchChannelMetas(ids: ids) { [weak self] (response) in
+            switch response {
+            case .success(let channelMetas):
+                self?.channelMetas = channelMetas
+                let resp = Main.Favorite.Response(metas: channelMetas)
+                self?.presenter?.presentFavorites(response: resp)
+                
+            case .error(let message):
+                let resp = Main.Error.Response(message: message)
+                self?.presenter?.presentFavoritesError(response: resp)
+            }
+        }
+    }
+    
+    func sortChannelNumbers(ascending: Bool) {
+        channelMetas.sort { ascending ? $0.0.channelStubNumber < $0.1.channelStubNumber : $0.0.channelStubNumber > $0.1.channelStubNumber }
+        let response = Main.Favorite.Response(metas: channelMetas)
+        self.presenter?.presentFavorites(response: response)
+    }
+    
+    func sortChannelNames(ascending: Bool) {
+        channelMetas.sort { ascending ? $0.0.channelTitle < $0.1.channelTitle : $0.0.channelTitle > $0.1.channelTitle }
+        let response = Main.Favorite.Response(metas: channelMetas)
+        self.presenter?.presentFavorites(response: response)
     }
 }

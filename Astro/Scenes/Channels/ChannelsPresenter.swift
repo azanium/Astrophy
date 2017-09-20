@@ -17,6 +17,7 @@ protocol ChannelsPresentationLogic
     func presentChannels(response: Channels.List.Response)
     func presentChannelMetas(response: Channels.Metadata.Response)
     func presentChannelsError(response: Channels.Error.Response)
+    func presentFavoritesChanged(response: Channels.Favorite.Response)
 }
 
 class ChannelsPresenter: ChannelsPresentationLogic
@@ -56,5 +57,10 @@ class ChannelsPresenter: ChannelsPresentationLogic
     func presentChannelsError(response: Channels.Error.Response) {
         let viewModel = Channels.Error.ViewModel(message: response.message)
         viewController?.displayChannelsError(viewModel: viewModel)
+    }
+    
+    func presentFavoritesChanged(response: Channels.Favorite.Response) {
+        let viewModel = Channels.Favorite.ViewModel()
+        viewController?.displayFavoritesChanged(viewModel: viewModel)
     }
 }

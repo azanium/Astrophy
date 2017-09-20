@@ -11,12 +11,15 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol ChannelsBusinessLogic
 {
     func fetchChannels(request: Channels.List.Request)
     func sortChannelNumbers(ascending: Bool)
     func sortChannelNames(ascending: Bool)
+    func addFavoriteChannel(request: Channels.Favorite.Request)
+    func removeFavoriteChannel(request: Channels.Favorite.Request)
 }
 
 protocol ChannelsDataStore
@@ -79,5 +82,48 @@ class ChannelsInteractor: ChannelsBusinessLogic, ChannelsDataStore
         channelMetas.sort { ascending ? $0.0.channelTitle < $0.1.channelTitle : $0.0.channelTitle > $0.1.channelTitle }
         let response = Channels.Metadata.Response(metas: channelMetas)
         self.presenter?.presentChannelMetas(response: response)
+    }
+    
+    func addFavoriteChannel(request: Channels.Favorite.Request) {
+        let pref = Preferences.getPreferences()
+        
+        var found = false
+        
+        for fav in pref.favorites {
+            if fav.channelId == request.meta.channelId {
+                found = true
+                break
+            }
+        }
+        
+        if !found {
+            Preferences.write {
+                pref.favorites.append(request.meta)
+            }
+            pref.save()
+        }
+        
+        let response = Channels.Favorite.Response()
+        self.presenter?.presentFavoritesChanged(response: response)
+    }
+    
+    func removeFavoriteChannel(request: Channels.Favorite.Request) {
+        let pref = Preferences.getPreferences()
+        
+        let favorites = List<ChannelMeta>()
+        for fav in pref.favorites {
+            if fav.channelId != request.meta.channelId {
+                favorites.append(fav)
+            }
+        }
+        
+        Preferences.write {
+            pref.favorites = favorites
+        }
+        
+        pref.save()
+        
+        let response = Channels.Favorite.Response()
+        self.presenter?.presentFavoritesChanged(response: response)
     }
 }

@@ -28,7 +28,8 @@ class ChannelCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        self.setupUI()
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {

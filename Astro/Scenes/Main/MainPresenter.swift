@@ -15,6 +15,7 @@ import UIKit
 protocol MainPresentationLogic
 {
     func presentFavorites(response: Main.Favorite.Response)
+    func presentFavoritesError(response: Main.Error.Response)
 }
 
 class MainPresenter: MainPresentationLogic
@@ -25,7 +26,39 @@ class MainPresenter: MainPresentationLogic
     
     func presentFavorites(response: Main.Favorite.Response)
     {
-        let viewModel = Main.Favorite.ViewModel()
-        viewController?.displayFavorites(viewModel: viewModel)
+        var metas = [ChannelMeta]()
+        
+        let pref = Preferences.getPreferences()
+        for fav in pref.favorites {
+            metas += [fav]
+        }
+        
+        print("favorites: \(pref.favorites)")
+        
+        let viewModel = Main.Favorite.ViewModel(metas: metas)
+        self.viewController?.displayFavorites(viewModel: viewModel)
+        
+        /*DispatchQueue.global().async {
+            
+            /*for meta in response.metas {
+                for fav in pref.favorites {
+                    if meta.channelId == fav.channelId {
+                        meta.isFavorite = true
+                        metas += [meta]
+                        break
+                    }
+                }
+            }*/
+            
+            
+            DispatchQueue.main.async {
+                
+            }
+        }*/
+    }
+    
+    func presentFavoritesError(response: Main.Error.Response) {
+        let viewModel = Main.Error.ViewModel(message: response.message)
+        viewController?.displayFavoritesError(viewModel: viewModel)
     }
 }

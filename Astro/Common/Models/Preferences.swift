@@ -38,16 +38,26 @@ open class Preferences: Object {
     }
     
     open func getFavoriteIndex(of: ChannelMeta) -> Int {
-        var index = -1
         
+        var index = 0
         for fav in favorites {
-            index += 1
+            
+            print("fav: \(fav.channelId), of: \(of.channelId)")
             if fav.channelId == of.channelId {
-                break
+                return index
             }
+            index += 1
         }
         
-        return index
+        return -1
+    }
+    
+    open func cloneFavorites() -> List<ChannelMeta> {
+        let results = List<ChannelMeta>()
+        
+        results.append(objectsIn: favorites)
+        
+        return results
     }
     
     open static func getPreferences() -> Preferences {

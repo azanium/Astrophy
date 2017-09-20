@@ -19,3 +19,17 @@ class ApiConstants: NSObject {
     }
     
 }
+
+class ApiResponse {
+    
+    enum ChannelsResponse {
+        case success(channels: [Channel])
+        case error(message: String)
+    }
+    
+    enum ChannelMetaResponse {
+        case success(channels: [ChannelMeta])
+        case error(message: String)
+    }
+    
+}

@@ -11,16 +11,34 @@
 //
 
 import UIKit
+import ALThreeCircleSpinner
+import RxCocoa
+import RxSwift
+import Kingfisher
+import XLActionController
 
 protocol MainDisplayLogic: class
 {
     func displayFavorites(viewModel: Main.Favorite.ViewModel)
+    func displayFavoritesError(viewModel: Main.Error.ViewModel)
 }
 
 class MainViewController: UIViewController, MainDisplayLogic
 {
     var interactor: MainBusinessLogic?
     var router: (NSObjectProtocol & MainRoutingLogic & MainDataPassing)?
+    
+    fileprivate let kCellIdentifier = "ChannelCell"
+    
+    var tableView: UITableView!
+    let spinner = ALThreeCircleSpinner(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+    
+    var displayedChannels = Variable([Channel]()) // Not used for now
+    var displayedMetas = Variable([ChannelMeta]())
+    
+    let disposeBag = DisposeBag()
+    private var sortChannelNumberAscending = true
+    private var sortChannelNameAscending = true
     
     // MARK: Object lifecycle
     
@@ -53,7 +71,40 @@ class MainViewController: UIViewController, MainDisplayLogic
     }
     
     private func setupUI() {
+        
         self.decorateNavigationBar()
+        
+        // We used hardcoded UI, because Xcode 8.3.3 has bug with top layout constraint on interface builder
+        tableView = UITableView()
+        self.view.addSubview(tableView)
+        tableView.snp.remakeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+        
+        tableView.backgroundColor = UIColor.black
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 40
+        tableView.tableHeaderView = UIView(frame: CGRect.zero)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.register(ChannelCell.self, forCellReuseIdentifier: kCellIdentifier)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "sort"),
+                                                                 style: .plain,
+                                                                 target: self,
+                                                                 action: #selector(showSortAction(sender:)))
+        
+        setupSpinner()
+    }
+    
+    func setupSpinner() {
+        self.view.addSubview(spinner)
+        spinner.snp.remakeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalTo(44)
+            make.height.equalTo(44)
+        }
     }
     
     // MARK: Routing
@@ -75,6 +126,8 @@ class MainViewController: UIViewController, MainDisplayLogic
         super.viewDidLoad()
         
         setupUI()
+        
+        setupTableRowBindings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,12 +140,103 @@ class MainViewController: UIViewController, MainDisplayLogic
     
     func fetchFavorites()
     {
+        spinner.startAnimating()
+        
         let request = Main.Favorite.Request()
         interactor?.fetchFavorites(request: request)
     }
     
     func displayFavorites(viewModel: Main.Favorite.ViewModel)
     {
+        spinner.stopAnimating()
         
+        displayedMetas.value = viewModel.metas
+    }
+    
+    func displayFavoritesError(viewModel: Main.Error.ViewModel) {
+        spinner.stopAnimating()
+    }
+    
+    // MARK: - Actions
+    
+    func showSortAction(sender: AnyObject) {
+        let actionController = SkypeActionController()
+        
+        actionController.addAction(Action("Sort by Channel Name", style: .default, handler: { action in
+            
+            DispatchQueue.main.async {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+                self.spinner.startAnimating()
+                self.interactor?.sortChannelNames(ascending: self.sortChannelNameAscending)
+                self.sortChannelNameAscending = !self.sortChannelNameAscending
+            }
+            
+        }))
+        
+        actionController.addAction(Action("Sort by Channel Number", style: .default, handler: { action in
+            
+            DispatchQueue.main.async {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+                self.spinner.startAnimating()
+                self.interactor?.sortChannelNumbers(ascending: self.sortChannelNumberAscending)
+                self.sortChannelNumberAscending = !self.sortChannelNumberAscending
+            }
+            
+        }))
+        
+        actionController.addAction(Action("Cancel", style: .cancel, handler: nil))
+        present(actionController, animated: true, completion: nil)
+        
+    }
+}
+
+// Table delegate and bindings
+
+extension MainViewController : UITableViewDelegate {
+    
+    fileprivate func setupTableRowBindings() {
+        
+        
+        // Bind out displayed channels to the tableview
+        displayedMetas.asObservable()
+            .bind(to: tableView
+                .rx
+                .items(cellIdentifier: kCellIdentifier, cellType: ChannelCell.self)
+            ) { (index, meta, cell) in
+                
+                cell.channelTitleLabel.text = meta.channelTitle
+                cell.channelDescriptionLabel.text = meta.channelDescription == "" ? "No Descriptions Available" : meta.channelDescription
+                cell.channelDescriptionLabel.textAlignment = meta.channelDescription == "" ? .center : .left
+                cell.channelNumberLabel.text = "Channel \(meta.channelStubNumber)"
+                
+                if meta.defaultLogo != "" {
+                    let imageUrl = URL(string: meta.defaultLogo)!
+                    cell.logoImageView.kf.indicatorType = .activity
+                    cell.logoImageView.kf.setImage(with: ImageResource(downloadURL: imageUrl, cacheKey: imageUrl.path))
+                }
+                cell.favoriteButton.isSelected = true
+                cell.favoriteChanged = { favButton in
+                    
+                    let pref = Preferences.getPreferences()
+                    
+                    Preferences.write {
+                        if pref.getFavoriteIndex(of: meta) > -1 {
+                            pref.favorites.remove(objectAtIndex: index)
+                        }
+                    }
+                    
+                    pref.save()
+                    
+                    // Refetch the favorites to update
+                    self.fetchFavorites()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 200
     }
 }

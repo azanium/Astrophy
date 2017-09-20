@@ -23,6 +23,7 @@ protocol ChannelsDisplayLogic: class
     func displayChannels(viewModel: Channels.List.ViewModel)
     func displayChannelMetas(viewModel: Channels.Metadata.ViewModel)
     func displayChannelsError(viewModel: Channels.Error.ViewModel)
+    func displayFavoritesChanged(viewModel: Channels.Favorite.ViewModel)
 }
 
 class ChannelsViewController: UIViewController, ChannelsDisplayLogic
@@ -170,6 +171,10 @@ class ChannelsViewController: UIViewController, ChannelsDisplayLogic
         self.spinner.stopAnimating()
     }
     
+    func displayFavoritesChanged(viewModel: Channels.Favorite.ViewModel) {
+        
+    }
+    
     // MARK: - Actions
     
     func showSortAction(sender: AnyObject) {
@@ -207,7 +212,6 @@ extension ChannelsViewController : UITableViewDelegate {
 
     fileprivate func setupTableRowBindings() {
         
-        
         // Bind out displayed channels to the tableview
         displayedMetas.asObservable()
             .bind(to: tableView
@@ -229,23 +233,14 @@ extension ChannelsViewController : UITableViewDelegate {
                 cell.favoriteChanged = { favButton in
                     
                     favButton.isSelected = !favButton.isSelected
-                    
-                    let pref = Preferences.getPreferences()
-                    
-                    Preferences.write {
-                        if favButton.isSelected {
-                            if pref.getFavoriteIndex(of: meta) < 0 {
-                                pref.favorites.append(meta)
-                            }
-                        }
-                        else {
-                            if pref.getFavoriteIndex(of: meta) > -1 {
-                                pref.favorites.remove(objectAtIndex: index)
-                            }
-                        }
+
+                    let request = Channels.Favorite.Request(meta: meta)
+                    if favButton.isSelected {
+                        self.interactor?.addFavoriteChannel(request: request)
                     }
-                    
-                    pref.save()
+                    else {
+                        self.interactor?.removeFavoriteChannel(request: request)
+                    }
                 }
             }
             .disposed(by: disposeBag)
