@@ -14,7 +14,8 @@ import UIKit
 
 protocol TVGuidePresentationLogic
 {
-    func presentSomething(response: TVGuide.Something.Response)
+    func presentChannels(response: TVGuide.Channels.Response)
+    func presentProgrammes(response: TVGuide.Programme.Response)
 }
 
 class TVGuidePresenter: TVGuidePresentationLogic
@@ -23,8 +24,14 @@ class TVGuidePresenter: TVGuidePresentationLogic
     
     // MARK: Do something
     
-    func presentSomething(response: TVGuide.Something.Response)
+    func presentChannels(response: TVGuide.Channels.Response)
     {
-        
+        let viewModel = TVGuide.Channels.ViewModel(channels: response.channels, currentPage: response.currentPage, pageCount: response.pageCount)
+        self.viewController?.displayChannels(viewModel: viewModel)
+    }
+    
+    func presentProgrammes(response: TVGuide.Programme.Response) {
+        let viewModel = TVGuide.Programme.ViewModel(events: response.events)
+        self.viewController?.displayProgrammes(viewModel: viewModel)
     }
 }

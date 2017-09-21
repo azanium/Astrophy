@@ -19,7 +19,8 @@ import Kingfisher
 
 protocol TVGuideDisplayLogic: class
 {
-    
+    func displayChannels(viewModel: TVGuide.Channels.ViewModel)
+    func displayProgrammes(viewModel: TVGuide.Programme.ViewModel)
 }
 
 class TVGuideViewController: UIViewController, TVGuideDisplayLogic
@@ -32,11 +33,17 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
     var tableView: UITableView!
     let spinner = ALThreeCircleSpinner(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
     
-    var displayedMetas = Variable([ChannelMeta]())
+    var displayedChannels = Variable([ChannelMeta]())
+    var displayedProgrammesDictionary = [String:[ChannelEvent]]()
     
     let disposeBag = DisposeBag()
     private var sortChannelNumberAscending = true
     private var sortChannelNameAscending = true
+    
+    let seekerView = SeekerView()
+    var isLoading = false
+    var currentPage = 1
+    var pageCount = 0
     
     // MARK: Object lifecycle
     
@@ -88,6 +95,7 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
         tableView.register(TVGuideCell.self, forCellReuseIdentifier: kCellIdentifier)
         
         setupSpinner()
+        seekerView.seekerTimeChanged = seekerTimeChanged
     }
     
     func setupSpinner() {
@@ -125,36 +133,81 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
         loadChannels()
     }
     
-    // MARK: Do something
-    
-    //@IBOutlet weak var nameTextField: UITextField!
-    
-    func loadChannels()
-    {
-        let request = TVGuide.Something.Request()
-        interactor?.doSomething(request: request)
-        
-        // prepare dummy
-        var metas = [ChannelMeta]()
-        let meta1 = ChannelMeta()
-        let meta2 = ChannelMeta()
-        meta1.channelTitle = "Astro China"
-        meta2.channelTitle = "Astro Wah Lai Toi"
-        metas += [meta1]
-        metas += [meta2]
-        
-        displayedMetas.value = metas
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
+    // MARK: Loading Data
+
+    func loadChannels(page: Int = 1)
+    {
+        isLoading = true
+        self.spinner.startAnimating()
+        
+        let request = TVGuide.Channels.Request(page: page)
+        interactor?.fetchChannels(request: request)
+    }
     
+    func loadProgrammes(page: Int = 1) {
+        isLoading = true
+        self.spinner.startAnimating()
+        
+        let request = TVGuide.Programme.Request(page: page, startDate: "2017-09-21 00:00", endDate: "2017-09-21 23:59")
+        interactor?.fetchProgrammes(request: request)
+    }
+    
+    // MARK: - Action Events
+    
+    func seekerTimeChanged(seekerView: SeekerView, time: String, hour: Int, minute: Int) {
+        print("Time: \(time)")
+    }
+    
+    // MARK: - Display
+    
+    func displayChannels(viewModel: TVGuide.Channels.ViewModel) {
+        print("Channel displayed")
+        isLoading = false
+        
+        self.spinner.stopAnimating()
+        
+        for channel in viewModel.channels {
+            displayedChannels.value.append(channel)
+        }
+        
+        currentPage = viewModel.currentPage
+        pageCount = viewModel.pageCount
+        
+    }
+    
+    func displayProgrammes(viewModel: TVGuide.Programme.ViewModel) {
+        for event in viewModel.events {
+            var displayedEvents = displayedProgrammesDictionary[event.channelId]
+            if displayedEvents == nil {
+                displayedEvents = [ChannelEvent]()
+            }
+            displayedEvents! += [event]
+            displayedProgrammesDictionary[event.channelId] = displayedEvents!
+        }
+        
+        print("programmes: \(displayedProgrammesDictionary)")
+        self.tableView.reloadData()
+    }
 }
 
 extension TVGuideViewController : UITableViewDelegate {
-    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == tableView {
+            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height) {
+                if !isLoading && currentPage < pageCount {
+                    self.loadChannels(page: currentPage + 1)
+                }
+            }
+        }
+    }
     fileprivate func setupTableRowBindings() {
         
         // Bind out displayed channels to the tableview
-        displayedMetas.asObservable()
+        displayedChannels.asObservable()
             .bind(to: tableView
                 .rx
                 .items(cellIdentifier: kCellIdentifier, cellType: TVGuideCell.self)
@@ -169,11 +222,10 @@ extension TVGuideViewController : UITableViewDelegate {
                 }
             }
             .disposed(by: disposeBag)
-        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return SeekerView(frame: CGRect.zero)
+        return seekerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

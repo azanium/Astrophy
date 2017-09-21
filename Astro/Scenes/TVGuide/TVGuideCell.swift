@@ -9,12 +9,19 @@
 import UIKit
 import SnapKit
 import Hue
+import RxSwift
+import RxCocoa
 
 class TVGuideCell: UITableViewCell {
 
     var containerView = UIView()
     var logoImageView = UIImageView()
     var channelTitleLabel = UILabel()
+    var programmesCollectionView: UICollectionView!
+    
+    var programmes = [ChannelEvent]()
+    
+    fileprivate let kTVProgrammeCellId = "kTVProgrammeCellId"
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,8 +46,7 @@ class TVGuideCell: UITableViewCell {
         // Setup container
         self.addSubview(containerView)
         containerView.backgroundColor = UIColor.white
-        //containerView.layer.cornerRadius = 3.0
-        //containerView.layer.masksToBounds = true
+        
         containerView.snp.remakeConstraints { (make) in
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
         }
@@ -56,7 +62,8 @@ class TVGuideCell: UITableViewCell {
             make.bottom.equalTo(containerView.snp.centerY)
             make.width.equalTo(70)
         }
-        logoImageView.backgroundColor = UIColor.black
+        logoImageView.backgroundColor = UIColor.clear
+        logoImageView.contentMode = .scaleAspectFit
         
         containerView.addSubview(channelTitleLabel)
         channelTitleLabel.snp.remakeConstraints { (make) in
@@ -69,6 +76,69 @@ class TVGuideCell: UITableViewCell {
         channelTitleLabel.textColor = UIColor.darkGray
         channelTitleLabel.numberOfLines = 0
         channelTitleLabel.textAlignment = .center
+        
+        
+        // Programmes Collection View
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        layout.itemSize = CGSize(width: 50, height: 50)
+        
+        programmesCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        programmesCollectionView.delegate = self
+        programmesCollectionView.dataSource = self
+        programmesCollectionView.backgroundColor = UIColor.clear
+        programmesCollectionView.register(TVProgrammeCell.self, forCellWithReuseIdentifier: kTVProgrammeCellId)
+        
+        let pr = ChannelEvent()
+        pr.programmeTitle = "Wakwawwwwww"
+        programmes += [pr]
+        programmes += [pr]
+        programmes += [pr]
+        programmes += [pr]
+        programmes += [pr]
+        programmes += [pr]
+        programmes += [pr]
+        programmes += [pr]
+        programmes += [pr]
+        
+        containerView.addSubview(programmesCollectionView)
+        programmesCollectionView.snp.remakeConstraints { (make) in
+            make.left.equalTo(logoImageView.snp.right).offset(padding.x)
+            make.top.equalToSuperview().offset(margin.top)
+            make.right.equalToSuperview().offset(-margin.right)
+            make.bottom.equalToSuperview().offset(-margin.bottom)
+        }
     }
     
+    
+}
+
+extension TVGuideCell : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return programmes.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kTVProgrammeCellId, for: indexPath) as! TVProgrammeCell
+        
+        let programme = self.programmes[indexPath.row]
+        
+        cell.programmeTitleLabel.text = programme.programmeTitle
+        cell.timeLabel.text = "2017-09-20 17:30:00.0"
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let hardCodedPadding:CGFloat = 1
+        let itemWidth = collectionView.bounds.height - hardCodedPadding
+        let itemHeight = collectionView.bounds.height - (2 * hardCodedPadding)
+        return CGSize(width: itemWidth, height: itemHeight)
+    }
 }

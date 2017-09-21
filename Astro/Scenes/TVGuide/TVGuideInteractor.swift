@@ -14,25 +14,94 @@ import UIKit
 
 protocol TVGuideBusinessLogic
 {
-    func doSomething(request: TVGuide.Something.Request)
+    func fetchChannels(request: TVGuide.Channels.Request)
+    func fetchProgrammes(request: TVGuide.Programme.Request)
 }
 
 protocol TVGuideDataStore
 {
-    //var name: String { get set }
+    var pagedChannels: PagedChannels { get set }
 }
 
 class TVGuideInteractor: TVGuideBusinessLogic, TVGuideDataStore
 {
     var presenter: TVGuidePresentationLogic?
     var worker: TVGuideWorker? = TVGuideWorker()
+    var pagedChannels: PagedChannels = PagedChannels()
     
     // MARK: Do something
     
-    func doSomething(request: TVGuide.Something.Request)
-    {
-        
-        let response = TVGuide.Something.Response()
-        presenter?.presentSomething(response: response)
+    func fetchProgrammes(request: TVGuide.Programme.Request) {
+        if pagedChannels.pageCount == 0 {
+            fetchAllChannelIds() { (pagedChannels) in
+                self.loadProgrammes(page: request.page, startDate: request.startDate, endDate: request.endDate)
+            }
+        }
+        else {
+            self.loadProgrammes(page: request.page, startDate: request.startDate, endDate: request.endDate)
+        }
     }
+    
+    func loadProgrammes(page: Int, startDate: String, endDate: String) {
+        let pageData = self.pagedChannels.pages[page - 1]
+        worker?.fetchEvents(ids: pageData.channelIds, startDate: startDate, endDate: endDate) { (response) in
+            switch response {
+            case .success(let events):
+                let resp = TVGuide.Programme.Response(events: events)
+                self.presenter?.presentProgrammes(response: resp)
+                
+            case .error(let message):
+                print("# error: TVGuideInteractor.fetchChannels(): \(message)")
+            }
+        }
+    }
+    
+    func fetchChannels(request: TVGuide.Channels.Request) {
+        if pagedChannels.pageCount == 0 {
+            fetchAllChannelIds() { (pagedChannels) in
+                self.pagedChannels = pagedChannels
+                self.pagedChannels.currentPage = request.page
+                
+                self.loadChannelsMeta(page: request.page)
+            }
+        }
+        else {
+            self.loadChannelsMeta(page: request.page)
+        }
+    }
+    
+    func loadChannelsMeta(page: Int) {
+        let pageData = self.pagedChannels.pages[page - 1]
+        worker?.fetchChannelMetas(ids: pageData.channelIds) { (response) in
+            switch response {
+            case .success(let channels):
+                let nextPage = min(page + 1, self.pagedChannels.pageCount)
+                let resp = TVGuide.Channels.Response(channels: channels, currentPage: nextPage, pageCount: self.pagedChannels.pageCount)
+                self.presenter?.presentChannels(response: resp)
+                
+                self.loadProgrammes(page: page, startDate: "2017-09-21%2000:00", endDate: "2017-09-21%2023:59")
+                
+            case .error(let message):
+                print("# error: TVGuideInteractor.fetchChannels(): \(message)")
+            }
+        }
+    }
+    
+    func fetchAllChannelIds(completionHandler: ((PagedChannels)->Void)?) {
+        worker?.fetchChannels() { (response) in
+            switch response {
+            case .success(let channels):
+                let pageChannels = PagedChannels()
+                pageChannels.importChannels(channels: channels, rowsPerPage: 10)
+                completionHandler?(pageChannels)
+                
+            case .error(_):
+                print("error")
+            }
+        }
+        
+        let response = TVGuide.Channels.Response()
+        presenter?.presentChannels(response: response)
+    }
+
 }

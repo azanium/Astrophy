@@ -11,6 +11,33 @@ import SwiftyJSON
 
 class DataTransformer {
     
+    static func transformJsonToChannelEvent(_ json: JSON) -> [ChannelEvent] {
+        var events = [ChannelEvent]()
+        
+        if let eventsJsonArray = json["getevent"].array {
+            
+            for evJson in eventsJsonArray {
+                
+                let event = ChannelEvent()
+                if let channelId = evJson["channelId"].int {
+                    event.channelId = String(channelId)
+                }
+                
+                if let programmeTitle = evJson["programmeTitle"].string {
+                    event.programmeTitle = programmeTitle
+                }
+                
+                if let displayDateTimeUtc = evJson["displayDateTimeUtc"].string {
+                    event.displayDateTimeUtc = displayDateTimeUtc
+                }
+                
+                events += [event]
+            }
+        }
+        
+        return events
+    }
+    
     static func transformJsonToChannels(_ json: JSON) -> [Channel] {
         
         var channels = [Channel]()
