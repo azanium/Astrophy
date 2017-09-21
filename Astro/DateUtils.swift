@@ -8,7 +8,23 @@
 
 import Foundation
 
-class DateTransformer {
+class DateUtils {
+    
+    static func currentTimeAsString() -> String {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute], from: Date())
+        let hour = components.hour!
+        let minute = components.minute!
+        return String(format: "%02d:%02d", arguments: [hour, minute])
+    }
+    
+    static func currentTime() -> (Int, Int) {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute], from: Date())
+        let hour = components.hour!
+        let minute = components.minute!
+        return (hour, minute)
+    }
     
     static func UTCToLocalAMPM(date: String) -> String {
         let dateFormatter = DateFormatter()

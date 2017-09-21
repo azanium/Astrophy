@@ -14,9 +14,9 @@ open class ChannelEvent: Object {
     open dynamic var programmeTitle: String = ""
     open dynamic var displayDateTimeUtc: String = ""
     open var dispayDateTime: String {
-        return DateTransformer.UTCToLocal(date: displayDateTimeUtc)
+        return DateUtils.UTCToLocal(date: displayDateTimeUtc)
     }
     open var dispayDateTimeAMPM: String {
-        return DateTransformer.UTCToLocalAMPM(date: displayDateTimeUtc)
+        return DateUtils.UTCToLocalAMPM(date: displayDateTimeUtc)
     }
 }

@@ -39,7 +39,7 @@
 		C1827F371F7176FB0057668A /* SkypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1827F351F7176FB0057668A /* SkypeCell.xib */; };
 		C1827F3B1F71E1670057668A /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F3A1F71E1670057668A /* Preferences.swift */; };
 		C187E55E1F73981B008031A1 /* TVProgrammeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187E55D1F73981B008031A1 /* TVProgrammeCell.swift */; };
-		C1A4AC831F738D52003F046A /* DateTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A4AC821F738D52003F046A /* DateTransformer.swift */; };
+		C1A4AC831F738D52003F046A /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A4AC821F738D52003F046A /* DateUtils.swift */; };
 		C1DE4BEF1F729E99005F89A4 /* PagedChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DE4BEE1F729E99005F89A4 /* PagedChannels.swift */; };
 		C1DE4BF11F72A079005F89A4 /* TVGuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DE4BF01F72A079005F89A4 /* TVGuideCell.swift */; };
 		C1DE4BF31F72BE15005F89A4 /* SeekerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DE4BF21F72BE15005F89A4 /* SeekerView.swift */; };
@@ -104,7 +104,7 @@
 		C1827F351F7176FB0057668A /* SkypeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SkypeCell.xib; sourceTree = "<group>"; };
 		C1827F3A1F71E1670057668A /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Preferences.swift; path = Common/Models/Preferences.swift; sourceTree = "<group>"; };
 		C187E55D1F73981B008031A1 /* TVProgrammeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVProgrammeCell.swift; sourceTree = "<group>"; };
-		C1A4AC821F738D52003F046A /* DateTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTransformer.swift; sourceTree = "<group>"; };
+		C1A4AC821F738D52003F046A /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		C1DE4BEE1F729E99005F89A4 /* PagedChannels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagedChannels.swift; path = Common/Models/PagedChannels.swift; sourceTree = "<group>"; };
 		C1DE4BF01F72A079005F89A4 /* TVGuideCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuideCell.swift; sourceTree = "<group>"; };
 		C1DE4BF21F72BE15005F89A4 /* SeekerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekerView.swift; sourceTree = "<group>"; };
@@ -268,7 +268,7 @@
 				C1827F251F70FD100057668A /* ApiConstants.swift */,
 				C1827F231F70FCD80057668A /* NetworkManager.swift */,
 				C17D81291F720834003457AC /* DataTransformer.swift */,
-				C1A4AC821F738D52003F046A /* DateTransformer.swift */,
+				C1A4AC821F738D52003F046A /* DateUtils.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -598,7 +598,7 @@
 				C1827F0B1F70E58F0057668A /* MainModels.swift in Sources */,
 				C13069741F6AA20A003ED484 /* AppDelegate.swift in Sources */,
 				C1827F0A1F70E58F0057668A /* MainInteractor.swift in Sources */,
-				C1A4AC831F738D52003F046A /* DateTransformer.swift in Sources */,
+				C1A4AC831F738D52003F046A /* DateUtils.swift in Sources */,
 				C11A6F921F737DAF0065F7D9 /* Array+Extensions.swift in Sources */,
 				C1DE4BF11F72A079005F89A4 /* TVGuideCell.swift in Sources */,
 				C1827F181F70E6660057668A /* ChannelsInteractor.swift in Sources */,
