@@ -40,13 +40,13 @@ class TVProgrammeCell: UICollectionViewCell {
             make.left.equalToSuperview().offset(margin.origin.x)
             make.top.equalToSuperview().offset(margin.origin.y)
             make.right.equalToSuperview().offset(-margin.origin.x)
-            make.height.equalTo(30).offset(-margin.origin.y)
+            make.height.equalTo(30)
         }
         timeLabel.textColor = UIColor.darkGray
         timeLabel.font = UIFont.systemFont(ofSize: 10)
         
         programmeTitleLabel.snp.remakeConstraints { (make) in
-            make.top.equalTo(timeLabel.snp.bottom)
+            make.top.equalToSuperview().offset(31)
             make.left.equalToSuperview().offset(margin.origin.x)
             make.right.equalToSuperview().offset(-margin.origin.y)
             make.bottom.equalToSuperview().offset(-margin.origin.y)

@@ -28,24 +28,24 @@ class DateUtils {
     
     static func UTCToLocalAMPM(date: String) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "H:mm:ss"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.S"
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         
         let dt = dateFormatter.date(from: date)
         dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "h:mm a"
+        dateFormatter.dateFormat = "HH:mm a"
         
         return dateFormatter.string(from: dt!)
     }
 
     static func UTCToLocal(date:String) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "H:mm:ss"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.S"
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         
         let dt = dateFormatter.date(from: date)
         dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "H:mm"
+        dateFormatter.dateFormat = "HH:mm"
         
         return dateFormatter.string(from: dt!)
     }

@@ -39,7 +39,7 @@ class TVGuideCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    func setupUI() {
+    fileprivate func setupUI() {
         self.selectionStyle = .none
         self.backgroundColor = UIColor.black
         
@@ -91,18 +91,6 @@ class TVGuideCell: UITableViewCell {
         programmesCollectionView.backgroundColor = UIColor.clear
         programmesCollectionView.register(TVProgrammeCell.self, forCellWithReuseIdentifier: kTVProgrammeCellId)
         
-        let pr = ChannelEvent()
-        pr.programmeTitle = "Wakwawwwwww"
-        programmes += [pr]
-        programmes += [pr]
-        programmes += [pr]
-        programmes += [pr]
-        programmes += [pr]
-        programmes += [pr]
-        programmes += [pr]
-        programmes += [pr]
-        programmes += [pr]
-        
         containerView.addSubview(programmesCollectionView)
         programmesCollectionView.snp.remakeConstraints { (make) in
             make.left.equalTo(logoImageView.snp.right).offset(padding.x)
@@ -112,7 +100,10 @@ class TVGuideCell: UITableViewCell {
         }
     }
     
-    
+    func assignProgrammes(_ programmes: [ChannelEvent]) {
+        self.programmes = programmes
+        self.programmesCollectionView.reloadData()
+    }
 }
 
 extension TVGuideCell : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -131,7 +122,7 @@ extension TVGuideCell : UICollectionViewDataSource, UICollectionViewDelegate, UI
         let programme = self.programmes[indexPath.row]
         
         cell.programmeTitleLabel.text = programme.programmeTitle
-        cell.timeLabel.text = "2017-09-20 17:30:00.0"
+        cell.timeLabel.text = programme.dispayDateTime
         return cell
     }
     

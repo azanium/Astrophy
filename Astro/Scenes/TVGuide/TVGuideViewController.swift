@@ -213,6 +213,10 @@ extension TVGuideViewController : UITableViewDelegate {
                 .items(cellIdentifier: kCellIdentifier, cellType: TVGuideCell.self)
             ) { (index, meta, cell) in
                 
+                if let programmes = self.displayedProgrammesDictionary[meta.channelId] {
+                    cell.assignProgrammes(programmes)
+                }
+                
                 cell.channelTitleLabel.text = meta.channelTitle
                 
                 if meta.defaultLogo != "" {
