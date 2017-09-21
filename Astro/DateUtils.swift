@@ -49,5 +49,23 @@ class DateUtils {
         
         return dateFormatter.string(from: dt!)
     }
+    
+    static func durationToMinutes(duration: String, format: String = "HH:mm:ss") -> Int {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        
+        var totalDurationInMinutes: Int = 0
+        if let dt = dateFormatter.date(from: duration) {
+            let calendar = Calendar.current
+            
+            let components = calendar.dateComponents([.hour, .minute], from: dt)
+            
+            if let hour = components.hour, let minute = components.minute {
+                totalDurationInMinutes = hour * 60 + minute
+            }
+        }
+        
+        return totalDurationInMinutes
+    }
 
 }

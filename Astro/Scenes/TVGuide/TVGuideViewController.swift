@@ -34,6 +34,7 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
     
     var displayedChannels = Variable([ChannelMeta]())
     var displayedProgrammesDictionary = [String:[ChannelEvent]]()
+    var displayedSeekTime = SeekTime()
     
     let disposeBag = DisposeBag()
     private var sortChannelNumberAscending = true
@@ -93,6 +94,11 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.register(TVGuideCell.self, forCellReuseIdentifier: kCellIdentifier)
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "sort"),
+                                                                 style: .plain,
+                                                                 target: self,
+                                                                 action: #selector(showSortAction(sender:)))
+        
         setupSpinner()
         seekerView.seekerTimeChanged = seekerTimeChanged
     }
@@ -151,12 +157,16 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
     
     func seekerTimeChanged(seekerView: SeekerView, time: String, hour: Int, minute: Int) {
         print("Time: \(time)")
+        
+        displayedSeekTime.hour = hour
+        displayedSeekTime.minute = minute
+        
+        self.tableView.reloadData()
     }
     
     // MARK: - Display
     
     func displayChannels(viewModel: TVGuide.Channels.ViewModel) {
-        print("Channel displayed")
         isLoading = false
         
         self.spinner.stopAnimating()
@@ -178,8 +188,39 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
             displayedProgrammesDictionary[event.channelId] = displayedEvents!
         }
         
-        print("programmes: \(displayedProgrammesDictionary)")
         self.tableView.reloadData()
+    }
+    
+    // MARK: - Actions
+    
+    func showSortAction(sender: AnyObject) {
+        let actionController = SkypeActionController()
+        
+        actionController.addAction(Action("Sort by Channel Name", style: .default, handler: { action in
+            
+            DispatchQueue.main.async {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+                self.spinner.startAnimating()
+                self.interactor?.sortChannelNames(ascending: self.sortChannelNameAscending)
+                self.sortChannelNameAscending = !self.sortChannelNameAscending
+            }
+            
+        }))
+        
+        actionController.addAction(Action("Sort by Channel Number", style: .default, handler: { action in
+            
+            DispatchQueue.main.async {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+                self.spinner.startAnimating()
+                self.interactor?.sortChannelNumbers(ascending: self.sortChannelNumberAscending)
+                self.sortChannelNumberAscending = !self.sortChannelNumberAscending
+            }
+            
+        }))
+        
+        actionController.addAction(Action("Cancel", style: .cancel, handler: nil))
+        present(actionController, animated: true, completion: nil)
+        
     }
     
 }
@@ -194,8 +235,9 @@ extension TVGuideViewController : UITableViewDelegate {
             }
         }
     }
+    
     fileprivate func setupTableRowBindings() {
-        
+    
         // Bind out displayed channels to the tableview
         displayedChannels.asObservable()
             .bind(to: tableView
@@ -214,6 +256,8 @@ extension TVGuideViewController : UITableViewDelegate {
                     cell.logoImageView.kf.indicatorType = .activity
                     cell.logoImageView.kf.setImage(with: ImageResource(downloadURL: imageUrl, cacheKey: imageUrl.path))
                 }
+                
+                cell.seekTime(hour: self.displayedSeekTime.hour, minute: self.displayedSeekTime.minute)
             }
             .disposed(by: disposeBag)
     }

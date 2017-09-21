@@ -17,9 +17,14 @@ class TVGuideCell: UITableViewCell {
     var containerView = UIView()
     var logoImageView = UIImageView()
     var channelTitleLabel = UILabel()
-    var programmesCollectionView: UICollectionView!
+    fileprivate var seekLineView = UIView()
+    
+    
+    fileprivate var scrollView = UIScrollView()
     
     var programmes = [ChannelEvent]()
+    fileprivate var programmeViews = [UIView]()
+    fileprivate var viewToProgrammeDictionary = [UIView:ChannelEvent]()
     
     fileprivate let kTVProgrammeCellId = "kTVProgrammeCellId"
     
@@ -52,7 +57,6 @@ class TVGuideCell: UITableViewCell {
         }
         
         let margin = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        let padding = CGPoint(x: 5, y: 5)
         
         // Setup logo
         containerView.addSubview(logoImageView)
@@ -77,59 +81,110 @@ class TVGuideCell: UITableViewCell {
         channelTitleLabel.numberOfLines = 0
         channelTitleLabel.textAlignment = .center
         
+        // Programmes Scroll View
+        containerView.addSubview(scrollView)
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.layer.shadowRadius = 2.0
+        scrollView.layer.shadowColor = UIColor.darkGray.cgColor
+        scrollView.layer.shadowOffset = CGSize.zero
+        scrollView.layer.shadowOpacity = 0.8
+        scrollView.backgroundColor = UIColor(hex: "#d0d0d0")
+        scrollView.delegate = self
         
-        // Programmes Collection View
-        
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        layout.itemSize = CGSize(width: 50, height: 50)
-        
-        programmesCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        programmesCollectionView.delegate = self
-        programmesCollectionView.dataSource = self
-        programmesCollectionView.backgroundColor = UIColor.clear
-        programmesCollectionView.register(TVProgrammeCell.self, forCellWithReuseIdentifier: kTVProgrammeCellId)
-        
-        containerView.addSubview(programmesCollectionView)
-        programmesCollectionView.snp.remakeConstraints { (make) in
-            make.left.equalTo(logoImageView.snp.right).offset(padding.x)
+        // Red line for time seeker
+        containerView.addSubview(seekLineView)
+        seekLineView.snp.remakeConstraints { (make) in
+            make.centerX.equalTo(scrollView.snp.centerX)
+            make.width.equalTo(2)
             make.top.equalToSuperview().offset(margin.top)
-            make.right.equalToSuperview().offset(-margin.right)
             make.bottom.equalToSuperview().offset(-margin.bottom)
         }
+        seekLineView.backgroundColor = UIColor(hex: "#04a9f3")
     }
+    
+    override func layoutSubviews() {
+
+        scrollView.snp.remakeConstraints { (make) in
+            make.left.equalTo(logoImageView.snp.right).offset(5)
+            make.top.equalToSuperview().offset(10)
+            make.right.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-10)
+        }
+        
+        
+        
+        var offsetX: CGFloat = 0
+        let padding: CGSize = CGSize(width: 5, height: 5)
+        var totalWidth: CGFloat = 0
+        // Update programme views
+        for programmeView in programmeViews {
+            if let programme = viewToProgrammeDictionary[programmeView] {
+                
+                //print("time: \(programme.displayDateTime): \(programme.displayDateTimeInMinutes)")
+                programmeView.frame = CGRect(x: CGFloat(programme.displayDateTimeInMinutes * 2) + (scrollView.frame.size.width * 0.5),
+                                             y: padding.height + 0,
+                                             width: CGFloat(programme.displayDurationInMinutes * 2) - 1,
+                                             height: scrollView.frame.size.height - padding.height * 2)
+                offsetX += CGFloat(programme.displayDurationInMinutes * 2) + 1
+                totalWidth += CGFloat(programme.displayDurationInMinutes * 2)
+            }
+        }
+    
+        let size = CGFloat(max(24 * 120, totalWidth))
+        scrollView.contentSize = CGSize(width: size + scrollView.frame.size.width, height: scrollView.frame.size.height)
+        
+        scrollView.setNeedsLayout()
+        scrollView.layoutIfNeeded()
+    }
+    
+    fileprivate func updateProgrammeViews() {
+        
+        for programmeView in programmeViews {
+            programmeView.removeFromSuperview()
+        }
+        programmeViews.removeAll()
+        viewToProgrammeDictionary.removeAll()
+        
+        for programme in programmes {
+            let pView = ProgrammeView(frame: CGRect.zero)
+            
+            pView.programmeTitleLabel.text = programme.programmeTitle
+            pView.timeLabel.text = programme.displayDateTime
+            
+            scrollView.addSubview(pView)
+            
+            viewToProgrammeDictionary[pView] = programme
+            programmeViews += [pView]
+        }
+        
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+    }
+    
+    // MARK: - Methods
     
     func assignProgrammes(_ programmes: [ChannelEvent]) {
         self.programmes = programmes
-        self.programmesCollectionView.reloadData()
+        
+        updateProgrammeViews()
+    }
+    
+    func seekTime(hour: Int, minute: Int) {
+        let posX = (hour  + (minute / 60)) * 120
+        scrollView.setContentOffset(CGPoint(x: posX, y: 0), animated: false)
     }
 }
 
-extension TVGuideCell : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return programmes.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kTVProgrammeCellId, for: indexPath) as! TVProgrammeCell
-        
-        let programme = self.programmes[indexPath.row]
-        
-        cell.programmeTitleLabel.text = programme.programmeTitle
-        cell.timeLabel.text = programme.dispayDateTime
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let hardCodedPadding:CGFloat = 1
-        let itemWidth = collectionView.bounds.height - hardCodedPadding
-        let itemHeight = collectionView.bounds.height - (2 * hardCodedPadding)
-        return CGSize(width: itemWidth, height: itemHeight)
-    }
+extension TVGuideCell : UIScrollViewDelegate {
+    /*
+     We don't need to know the position of programme time for now
+     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let posX = min(max(scrollView.contentOffset.x, 0), 120 * 24)
+        let hourComma = posX / 120
+        let minutesFrac = hourComma.truncatingRemainder(dividingBy: 1)
+        let minutes = Int(min(round(minutesFrac * 60), 59))
+        let hour = Int(floor(hourComma))
+        let time = hour >= 24 ? "00:00" : String(format: "%02d:%02d", arguments: [hour, minutes])
+    }*/
 }
+

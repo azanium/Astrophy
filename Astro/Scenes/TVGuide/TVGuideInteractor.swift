@@ -15,11 +15,14 @@ import UIKit
 protocol TVGuideBusinessLogic
 {
     func fetchChannels(request: TVGuide.Channels.Request)
+    func sortChannelNumbers(ascending: Bool)
+    func sortChannelNames(ascending: Bool)
 }
 
 protocol TVGuideDataStore
 {
     var pagedChannels: PagedChannels { get set }
+    var channels: [ChannelMeta] { get set }
 }
 
 class TVGuideInteractor: TVGuideBusinessLogic, TVGuideDataStore
@@ -27,6 +30,7 @@ class TVGuideInteractor: TVGuideBusinessLogic, TVGuideDataStore
     var presenter: TVGuidePresentationLogic?
     var worker: TVGuideWorker? = TVGuideWorker()
     var pagedChannels: PagedChannels = PagedChannels()
+    var channels = [ChannelMeta]()
     
     // MARK: Do something
     
@@ -49,7 +53,9 @@ class TVGuideInteractor: TVGuideBusinessLogic, TVGuideDataStore
         worker?.fetchChannelMetas(ids: pageData.channelIds) { (response) in
             switch response {
             case .success(let channels):
-                
+                for ch in channels {
+                    self.channels += [ch]
+                }
                 self.loadProgrammes(channels: channels, page: page, startDate: "2017-09-21%2000:00", endDate: "2017-09-21%2023:59")
                 
             case .error(let message):
@@ -88,6 +94,22 @@ class TVGuideInteractor: TVGuideBusinessLogic, TVGuideDataStore
                 print("error")
             }
         }
+    }
+    
+    func sortChannelNumbers(ascending: Bool) {
+        channels.sort { (ch1, ch2) -> Bool in
+            ascending ? ch1.channelStubNumber < ch2.channelStubNumber : ch1.channelStubNumber > ch2.channelStubNumber
+        }
+        
+        self.loadProgrammes(channels: channels, page: pagedChannels.currentPage, startDate: "2017-09-21%2000:00", endDate: "2017-09-21%2023:59")
+    }
+    
+    func sortChannelNames(ascending: Bool) {
+        channels.sort { (ch1, ch2) -> Bool in
+            ascending ? ch1.channelTitle < ch2.channelTitle : ch1.channelTitle > ch2.channelTitle
+        }
+        
+        self.loadProgrammes(channels: channels, page: pagedChannels.currentPage, startDate: "2017-09-21%2000:00", endDate: "2017-09-21%2023:59")
     }
 
 }

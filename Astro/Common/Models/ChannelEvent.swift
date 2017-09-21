@@ -13,10 +13,18 @@ open class ChannelEvent: Object {
     open dynamic var channelId: String = ""
     open dynamic var programmeTitle: String = ""
     open dynamic var displayDateTimeUtc: String = ""
-    open var dispayDateTime: String {
+    open var displayDateTime: String {
         return DateUtils.UTCToLocal(date: displayDateTimeUtc)
     }
-    open var dispayDateTimeAMPM: String {
+    open var displayDateTimeAMPM: String {
         return DateUtils.UTCToLocalAMPM(date: displayDateTimeUtc)
+    }
+    open var displayDateTimeInMinutes: Int {
+        return DateUtils.durationToMinutes(duration: displayDateTime, format: "HH:mm")
+    }
+    
+    open dynamic var displayDuration: String = ""
+    open var displayDurationInMinutes: Int {
+        return DateUtils.durationToMinutes(duration: displayDuration)
     }
 }

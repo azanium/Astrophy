@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class SeekerView: UIView {
 
@@ -17,8 +19,12 @@ class SeekerView: UIView {
     fileprivate var timeViews = [SeekerTimeView]()
     fileprivate var nowLabel = UILabel()
     fileprivate var seekerView = UIView()
+    fileprivate var seekButton = UIButton()
     
     var seekerTimeChanged: SeekerTimeChangedHandler?
+    var currentTime = SeekTime()
+    
+    let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,7 +41,7 @@ class SeekerView: UIView {
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0))
         }
         scrollView.contentSize = CGSize(width: 60 * 24 + (frame.size.width), height: scrollView.frame.size.height)
-        scrollView.backgroundColor = UIColor.darkGray
+        
         scrollView.setNeedsLayout()
         scrollView.layoutIfNeeded()
         
@@ -44,6 +50,12 @@ class SeekerView: UIView {
             make.top.equalTo(scrollView.snp.bottom)
             make.bottom.equalToSuperview()
             make.width.equalTo(70)
+        }
+        seekButton.snp.remakeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(scrollView.snp.bottom)
+            make.bottom.equalToSuperview()
+            make.width.equalTo(120)
         }
         
         seekerView.snp.remakeConstraints { (make) in
@@ -67,7 +79,11 @@ class SeekerView: UIView {
         self.addSubview(scrollView)
         self.addSubview(nowLabel)
         self.addSubview(seekerView)
+        self.addSubview(seekButton)
+        
+        scrollView.backgroundColor = UIColor.darkGray
         scrollView.showsVerticalScrollIndicator = false
+        
         scrollView.delegate = self
         for time in times {
             let time1 = SeekerTimeView(frame: CGRect.zero)
@@ -77,11 +93,15 @@ class SeekerView: UIView {
             timeViews += [time1]
         }
         
-        nowLabel.backgroundColor = UIColor(hex: "#04a9f3")
-        nowLabel.textColor = UIColor.white
-        nowLabel.font = UIFont.boldSystemFont(ofSize: 17)
-        nowLabel.text = "-"
-        nowLabel.textAlignment = .center
+        seekButton.backgroundColor = UIColor(hex: "#04a9f3")
+        seekButton.setTitleColor(UIColor.lightGray, for: .highlighted)
+        seekButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        seekButton.setTitle("00:00", for: .normal)
+        
+        seekButton.rx.tap.bind {
+            let time = self.currentTime.hour >= 24 ? "00:00" : String(format: "%02d:%02d", arguments: [self.currentTime.hour, self.currentTime.minute])
+            self.seekerTimeChanged?(self, time, self.currentTime.hour, self.currentTime.minute)
+        }.disposed(by: disposeBag)
         
         seekerView.backgroundColor = UIColor(hex: "#04a9f3")
         
@@ -90,7 +110,7 @@ class SeekerView: UIView {
     }
     
     func seekTime(hour: Int, minute: Int) {
-        let posX = (hour  + (minute / 60)) * 60
+        let posX = (hour  + (minute / 60)) * 120
         scrollView.setContentOffset(CGPoint(x: posX, y: 0), animated: true)
     }
 }
@@ -106,8 +126,11 @@ extension SeekerView : UIScrollViewDelegate {
         let time = hour >= 24 ? "00:00" : String(format: "%02d:%02d", arguments: [hour, minutes])
         
         nowLabel.text = time
+        seekButton.setTitle("Go to \(time)", for: .normal)
+        currentTime.hour = hour
+        currentTime.minute = minutes
         
-        seekerTimeChanged?(self, time, hour, minutes)
+        //seekerTimeChanged?(self, time, hour, minutes)
     }
     
 }

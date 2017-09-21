@@ -38,12 +38,13 @@
 		C1827F361F7176FB0057668A /* Skype.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F341F7176FB0057668A /* Skype.swift */; };
 		C1827F371F7176FB0057668A /* SkypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1827F351F7176FB0057668A /* SkypeCell.xib */; };
 		C1827F3B1F71E1670057668A /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1827F3A1F71E1670057668A /* Preferences.swift */; };
-		C187E55E1F73981B008031A1 /* TVProgrammeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187E55D1F73981B008031A1 /* TVProgrammeCell.swift */; };
+		C187E55E1F73981B008031A1 /* ProgrammeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187E55D1F73981B008031A1 /* ProgrammeView.swift */; };
+		C187E5621F73F149008031A1 /* SeekerTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187E5601F73EEFB008031A1 /* SeekerTimeView.swift */; };
+		C187E5631F73F14B008031A1 /* SeekerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187E5611F73EEFB008031A1 /* SeekerView.swift */; };
+		C187E5651F742BE2008031A1 /* SeekTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187E5641F742BE2008031A1 /* SeekTime.swift */; };
 		C1A4AC831F738D52003F046A /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A4AC821F738D52003F046A /* DateUtils.swift */; };
 		C1DE4BEF1F729E99005F89A4 /* PagedChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DE4BEE1F729E99005F89A4 /* PagedChannels.swift */; };
 		C1DE4BF11F72A079005F89A4 /* TVGuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DE4BF01F72A079005F89A4 /* TVGuideCell.swift */; };
-		C1DE4BF31F72BE15005F89A4 /* SeekerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DE4BF21F72BE15005F89A4 /* SeekerView.swift */; };
-		C1DE4BF51F72C1F8005F89A4 /* SeekerTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DE4BF41F72C1F8005F89A4 /* SeekerTimeView.swift */; };
 		C1EEE3161F7293190009E812 /* TVGuideInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EEE3101F7293190009E812 /* TVGuideInteractor.swift */; };
 		C1EEE3171F7293190009E812 /* TVGuideModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EEE3111F7293190009E812 /* TVGuideModels.swift */; };
 		C1EEE3181F7293190009E812 /* TVGuidePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EEE3121F7293190009E812 /* TVGuidePresenter.swift */; };
@@ -103,12 +104,13 @@
 		C1827F341F7176FB0057668A /* Skype.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skype.swift; sourceTree = "<group>"; };
 		C1827F351F7176FB0057668A /* SkypeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SkypeCell.xib; sourceTree = "<group>"; };
 		C1827F3A1F71E1670057668A /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Preferences.swift; path = Common/Models/Preferences.swift; sourceTree = "<group>"; };
-		C187E55D1F73981B008031A1 /* TVProgrammeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVProgrammeCell.swift; sourceTree = "<group>"; };
+		C187E55D1F73981B008031A1 /* ProgrammeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammeView.swift; sourceTree = "<group>"; };
+		C187E5601F73EEFB008031A1 /* SeekerTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekerTimeView.swift; sourceTree = "<group>"; };
+		C187E5611F73EEFB008031A1 /* SeekerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekerView.swift; sourceTree = "<group>"; };
+		C187E5641F742BE2008031A1 /* SeekTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekTime.swift; sourceTree = "<group>"; };
 		C1A4AC821F738D52003F046A /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		C1DE4BEE1F729E99005F89A4 /* PagedChannels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PagedChannels.swift; path = Common/Models/PagedChannels.swift; sourceTree = "<group>"; };
 		C1DE4BF01F72A079005F89A4 /* TVGuideCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuideCell.swift; sourceTree = "<group>"; };
-		C1DE4BF21F72BE15005F89A4 /* SeekerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekerView.swift; sourceTree = "<group>"; };
-		C1DE4BF41F72C1F8005F89A4 /* SeekerTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekerTimeView.swift; sourceTree = "<group>"; };
 		C1EEE3101F7293190009E812 /* TVGuideInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuideInteractor.swift; sourceTree = "<group>"; };
 		C1EEE3111F7293190009E812 /* TVGuideModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuideModels.swift; sourceTree = "<group>"; };
 		C1EEE3121F7293190009E812 /* TVGuidePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVGuidePresenter.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 		C1827F321F7176FB0057668A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C187E55F1F73EEFB008031A1 /* SeekerView */,
 				C1827F331F7176FB0057668A /* SkypeActionController */,
 			);
 			name = Components;
@@ -301,6 +304,16 @@
 			path = SkypeActionController;
 			sourceTree = "<group>";
 		};
+		C187E55F1F73EEFB008031A1 /* SeekerView */ = {
+			isa = PBXGroup;
+			children = (
+				C187E5601F73EEFB008031A1 /* SeekerTimeView.swift */,
+				C187E5611F73EEFB008031A1 /* SeekerView.swift */,
+				C187E5641F742BE2008031A1 /* SeekTime.swift */,
+			);
+			path = SeekerView;
+			sourceTree = "<group>";
+		};
 		C1EEE30F1F7292FB0009E812 /* TVGuide */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,9 +324,7 @@
 				C1EEE3141F7293190009E812 /* TVGuideViewController.swift */,
 				C1EEE3151F7293190009E812 /* TVGuideWorker.swift */,
 				C1DE4BF01F72A079005F89A4 /* TVGuideCell.swift */,
-				C1DE4BF21F72BE15005F89A4 /* SeekerView.swift */,
-				C1DE4BF41F72C1F8005F89A4 /* SeekerTimeView.swift */,
-				C187E55D1F73981B008031A1 /* TVProgrammeCell.swift */,
+				C187E55D1F73981B008031A1 /* ProgrammeView.swift */,
 			);
 			name = TVGuide;
 			path = Scenes/TVGuide;
@@ -575,10 +586,10 @@
 			files = (
 				C1827F2C1F713E5E0057668A /* ChannelMeta.swift in Sources */,
 				C1827F1B1F70E6660057668A /* ChannelsRouter.swift in Sources */,
+				C187E5651F742BE2008031A1 /* SeekTime.swift in Sources */,
 				C1827F2A1F7128960057668A /* ChannelCell.swift in Sources */,
 				C1827F1D1F70E6660057668A /* ChannelsWorker.swift in Sources */,
 				C1827F0E1F70E58F0057668A /* MainViewController.swift in Sources */,
-				C1DE4BF31F72BE15005F89A4 /* SeekerView.swift in Sources */,
 				C17D812A1F720834003457AC /* DataTransformer.swift in Sources */,
 				C1EEE31B1F7293190009E812 /* TVGuideWorker.swift in Sources */,
 				C1827F2E1F7141F80057668A /* ChannelExtRef.swift in Sources */,
@@ -586,6 +597,7 @@
 				C1827F261F70FD100057668A /* ApiConstants.swift in Sources */,
 				C1827F241F70FCD80057668A /* NetworkManager.swift in Sources */,
 				C1EEE3161F7293190009E812 /* TVGuideInteractor.swift in Sources */,
+				C187E5621F73F149008031A1 /* SeekerTimeView.swift in Sources */,
 				C1EEE3191F7293190009E812 /* TVGuideRouter.swift in Sources */,
 				C1827F0F1F70E58F0057668A /* MainWorker.swift in Sources */,
 				C1827F3B1F71E1670057668A /* Preferences.swift in Sources */,
@@ -594,7 +606,6 @@
 				C1827F281F71032B0057668A /* Channel.swift in Sources */,
 				C1827F361F7176FB0057668A /* Skype.swift in Sources */,
 				C1EEE3181F7293190009E812 /* TVGuidePresenter.swift in Sources */,
-				C1DE4BF51F72C1F8005F89A4 /* SeekerTimeView.swift in Sources */,
 				C1827F0B1F70E58F0057668A /* MainModels.swift in Sources */,
 				C13069741F6AA20A003ED484 /* AppDelegate.swift in Sources */,
 				C1827F0A1F70E58F0057668A /* MainInteractor.swift in Sources */,
@@ -607,8 +618,9 @@
 				C1DE4BEF1F729E99005F89A4 /* PagedChannels.swift in Sources */,
 				C1827F1C1F70E6660057668A /* ChannelsViewController.swift in Sources */,
 				C1827F191F70E6660057668A /* ChannelsModels.swift in Sources */,
+				C187E5631F73F14B008031A1 /* SeekerView.swift in Sources */,
 				C1EEE31A1F7293190009E812 /* TVGuideViewController.swift in Sources */,
-				C187E55E1F73981B008031A1 /* TVProgrammeCell.swift in Sources */,
+				C187E55E1F73981B008031A1 /* ProgrammeView.swift in Sources */,
 				C1827F1A1F70E6660057668A /* ChannelsPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

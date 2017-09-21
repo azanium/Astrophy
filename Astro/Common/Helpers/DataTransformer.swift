@@ -31,6 +31,10 @@ class DataTransformer {
                     event.displayDateTimeUtc = displayDateTimeUtc
                 }
                 
+                if let displayDuration = evJson["displayDuration"].string {
+                    event.displayDuration = displayDuration
+                }
+                
                 events += [event]
             }
         }
