@@ -19,15 +19,16 @@ class TVGuideWorker
         NetworkManager.shared.get(url: ApiConstants.channelList,
                                   params: nil,
                                   headers: nil) { (response) in
-                                    
-                                    switch response {
-                                    case .Success(let result):
-                                        var channels = [Channel]()
-                                        channels = DataTransformer.transformJsonToChannels(result)
-                                        onCompletionHandler?(.success(channels: channels))
-                                        
-                                    case .Error( _, let message):
-                                        onCompletionHandler?(.error(message: message))
+                                    DispatchQueue.main.async {
+                                        switch response {
+                                        case .Success(let result):
+                                            var channels = [Channel]()
+                                            channels = DataTransformer.transformJsonToChannels(result)
+                                            onCompletionHandler?(.success(channels: channels))
+                                            
+                                        case .Error( _, let message):
+                                            onCompletionHandler?(.error(message: message))
+                                        }
                                     }
         }
     }
@@ -38,15 +39,16 @@ class TVGuideWorker
         NetworkManager.shared.get(url: url,
                                   params: nil,
                                   headers: nil) { (response) in
-                                    
-                                    switch response {
-                                    case .Success(let result):
-                                        var channels = [ChannelMeta]()
-                                        channels = DataTransformer.transformJsonToChannelMeta(result)
-                                        onCompletionHandler?(.success(channels: channels))
-                                        
-                                    case .Error( _, let message):
-                                        onCompletionHandler?(.error(message: message))
+                                    DispatchQueue.main.async {
+                                        switch response {
+                                        case .Success(let result):
+                                            var channels = [ChannelMeta]()
+                                            channels = DataTransformer.transformJsonToChannelMeta(result)
+                                            onCompletionHandler?(.success(channels: channels))
+                                            
+                                        case .Error( _, let message):
+                                            onCompletionHandler?(.error(message: message))
+                                        }
                                     }
         }
     }
@@ -56,15 +58,16 @@ class TVGuideWorker
         NetworkManager.shared.get(url: url,
                                   params: nil,
                                   headers: nil) { (response) in
-                                    
-                                    switch response {
-                                    case .Success(let result):
-                                        var events = [ChannelEvent]()
-                                        events = DataTransformer.transformJsonToChannelEvent(result)
-                                        onCompletionHandler?(.success(events: events))
-                                        
-                                    case .Error( _, let message):
-                                        onCompletionHandler?(.error(message: message))
+                                    DispatchQueue.main.async {
+                                        switch response {
+                                        case .Success(let result):
+                                            var events = [ChannelEvent]()
+                                            events = DataTransformer.transformJsonToChannelEvent(result)
+                                            onCompletionHandler?(.success(events: events))
+                                            
+                                        case .Error( _, let message):
+                                            onCompletionHandler?(.error(message: message))
+                                        }
                                     }
         }
     }

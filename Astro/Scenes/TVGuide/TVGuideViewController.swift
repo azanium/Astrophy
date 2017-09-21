@@ -20,7 +20,6 @@ import Kingfisher
 protocol TVGuideDisplayLogic: class
 {
     func displayChannels(viewModel: TVGuide.Channels.ViewModel)
-    func displayProgrammes(viewModel: TVGuide.Programme.ViewModel)
 }
 
 class TVGuideViewController: UIViewController, TVGuideDisplayLogic
@@ -147,15 +146,7 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
         let request = TVGuide.Channels.Request(page: page)
         interactor?.fetchChannels(request: request)
     }
-    
-    func loadProgrammes(page: Int = 1) {
-        isLoading = true
-        self.spinner.startAnimating()
-        
-        let request = TVGuide.Programme.Request(page: page, startDate: "2017-09-21 00:00", endDate: "2017-09-21 23:59")
-        interactor?.fetchProgrammes(request: request)
-    }
-    
+
     // MARK: - Action Events
     
     func seekerTimeChanged(seekerView: SeekerView, time: String, hour: Int, minute: Int) {
@@ -177,9 +168,7 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
         currentPage = viewModel.currentPage
         pageCount = viewModel.pageCount
         
-    }
-    
-    func displayProgrammes(viewModel: TVGuide.Programme.ViewModel) {
+        // Process events
         for event in viewModel.events {
             var displayedEvents = displayedProgrammesDictionary[event.channelId]
             if displayedEvents == nil {
@@ -192,6 +181,7 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
         print("programmes: \(displayedProgrammesDictionary)")
         self.tableView.reloadData()
     }
+    
 }
 
 extension TVGuideViewController : UITableViewDelegate {

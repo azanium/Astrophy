@@ -28,6 +28,7 @@ enum TVGuide
             var channels = [ChannelMeta]()
             var currentPage: Int = 1
             var pageCount: Int = 0
+            var events = [ChannelEvent]()
         }
         
         struct ViewModel
@@ -35,26 +36,7 @@ enum TVGuide
             var channels = [ChannelMeta]()
             var currentPage: Int = 1
             var pageCount: Int = 0
-        }
-    }
-    
-    enum Programme
-    {
-        struct Request
-        {
-            var page = 1
-            var startDate = ""
-            var endDate = ""
-        }
-        
-        struct Response
-        {
             var events = [ChannelEvent]()
-        }
-        
-        struct ViewModel
-        {
-            var events = [ChannelEvent]()            
         }
     }
 }
