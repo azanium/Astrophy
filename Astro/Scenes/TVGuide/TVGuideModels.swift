@@ -21,6 +21,8 @@ enum TVGuide
         struct Request
         {
             var page = 1
+            var startDate = ""
+            var endDate = ""
         }
         
         struct Response
@@ -37,6 +39,14 @@ enum TVGuide
             var currentPage: Int = 1
             var pageCount: Int = 0
             var events = [ChannelEvent]()
+        }
+    }
+    
+    enum Sort {
+        struct Request {
+            var ascending = true
+            var startDate = ""
+            var endDate = ""
         }
     }
 }

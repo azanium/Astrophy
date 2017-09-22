@@ -83,6 +83,7 @@ class SeekerView: UIView {
         
         scrollView.backgroundColor = UIColor.darkGray
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
         
         scrollView.delegate = self
         for time in times {

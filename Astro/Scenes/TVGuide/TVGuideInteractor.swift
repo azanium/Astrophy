@@ -15,8 +15,8 @@ import UIKit
 protocol TVGuideBusinessLogic
 {
     func fetchChannels(request: TVGuide.Channels.Request)
-    func sortChannelNumbers(ascending: Bool)
-    func sortChannelNames(ascending: Bool)
+    func sortChannelNumbers(request: TVGuide.Sort.Request)
+    func sortChannelNames(request: TVGuide.Sort.Request)
 }
 
 protocol TVGuideDataStore
@@ -40,23 +40,23 @@ class TVGuideInteractor: TVGuideBusinessLogic, TVGuideDataStore
                 self.pagedChannels = pagedChannels
                 self.pagedChannels.currentPage = request.page
                 
-                self.loadChannelsMeta(page: request.page)
+                self.loadChannelsMeta(request: request)
             }
         }
         else {
-            self.loadChannelsMeta(page: request.page)
+            self.loadChannelsMeta(request: request)
         }
     }
     
-    func loadChannelsMeta(page: Int) {
-        let pageData = self.pagedChannels.pages[page - 1]
+    func loadChannelsMeta(request: TVGuide.Channels.Request) {
+        let pageData = self.pagedChannels.pages[request.page - 1]
         worker?.fetchChannelMetas(ids: pageData.channelIds) { (response) in
             switch response {
             case .success(let channels):
                 for ch in channels {
                     self.channels += [ch]
                 }
-                self.loadProgrammes(channels: channels, page: page, startDate: "2017-09-21%2000:00", endDate: "2017-09-21%2023:59")
+                self.loadProgrammes(channels: channels, page: request.page, startDate: request.startDate, endDate: request.endDate)
                 
             case .error(let message):
                 print("# error: TVGuideInteractor.fetchChannels(): \(message)")
@@ -96,20 +96,20 @@ class TVGuideInteractor: TVGuideBusinessLogic, TVGuideDataStore
         }
     }
     
-    func sortChannelNumbers(ascending: Bool) {
+    func sortChannelNumbers(request: TVGuide.Sort.Request) {
         channels.sort { (ch1, ch2) -> Bool in
-            ascending ? ch1.channelStubNumber < ch2.channelStubNumber : ch1.channelStubNumber > ch2.channelStubNumber
+            request.ascending ? ch1.channelStubNumber < ch2.channelStubNumber : ch1.channelStubNumber > ch2.channelStubNumber
         }
         
-        self.loadProgrammes(channels: channels, page: pagedChannels.currentPage, startDate: "2017-09-21%2000:00", endDate: "2017-09-21%2023:59")
+        self.loadProgrammes(channels: channels, page: pagedChannels.currentPage, startDate: request.startDate, endDate: request.endDate)
     }
     
-    func sortChannelNames(ascending: Bool) {
+    func sortChannelNames(request: TVGuide.Sort.Request) {
         channels.sort { (ch1, ch2) -> Bool in
-            ascending ? ch1.channelTitle < ch2.channelTitle : ch1.channelTitle > ch2.channelTitle
+            request.ascending ? ch1.channelTitle < ch2.channelTitle : ch1.channelTitle > ch2.channelTitle
         }
         
-        self.loadProgrammes(channels: channels, page: pagedChannels.currentPage, startDate: "2017-09-21%2000:00", endDate: "2017-09-21%2023:59")
+        self.loadProgrammes(channels: channels, page: pagedChannels.currentPage, startDate: request.startDate, endDate: request.endDate)
     }
 
 }

@@ -69,4 +69,14 @@ class DateUtils {
         return totalDurationInMinutes
     }
 
+    static func currentDateForRequest(time: String) -> String {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day], from: Date())
+        
+        if let year = components.year, let month = components.month, let day = components.day {
+            return "\(year)-\(month)-\(day)%20\(time)"
+        }
+        
+        return "2017-09-22%2000:00"
+    }
 }

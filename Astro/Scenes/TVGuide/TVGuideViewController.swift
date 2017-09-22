@@ -149,7 +149,9 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
         isLoading = true
         self.spinner.startAnimating()
         
-        let request = TVGuide.Channels.Request(page: page)
+        let request = TVGuide.Channels.Request(page: page,
+                                               startDate: DateUtils.currentDateForRequest(time: "00:00"),
+                                               endDate: DateUtils.currentDateForRequest(time: "23:59"))
         interactor?.fetchChannels(request: request)
     }
 
@@ -172,9 +174,6 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
         self.spinner.stopAnimating()
         
         displayedChannels.value = viewModel.channels
-        /*for channel in viewModel.channels {
-            displayedChannels.value.append(channel)
-        }*/
         
         currentPage = viewModel.currentPage
         pageCount = viewModel.pageCount
@@ -202,7 +201,11 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
             DispatchQueue.main.async {
                 self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
                 self.spinner.startAnimating()
-                self.interactor?.sortChannelNames(ascending: self.sortChannelNameAscending)
+                
+                let request = TVGuide.Sort.Request(ascending: self.sortChannelNameAscending,
+                                                   startDate: DateUtils.currentDateForRequest(time: "00:00"),
+                                                   endDate: DateUtils.currentDateForRequest(time: "23:59"))
+                self.interactor?.sortChannelNames(request: request)
                 self.sortChannelNameAscending = !self.sortChannelNameAscending
             }
             
@@ -213,7 +216,11 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
             DispatchQueue.main.async {
                 self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
                 self.spinner.startAnimating()
-                self.interactor?.sortChannelNumbers(ascending: self.sortChannelNumberAscending)
+                
+                let request = TVGuide.Sort.Request(ascending: self.sortChannelNameAscending,
+                                                   startDate: DateUtils.currentDateForRequest(time: "00:00"),
+                                                   endDate: DateUtils.currentDateForRequest(time: "23:59"))
+                self.interactor?.sortChannelNumbers(request: request)
                 self.sortChannelNumberAscending = !self.sortChannelNumberAscending
             }
             
@@ -229,7 +236,7 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
 extension TVGuideViewController : UITableViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView == tableView {
-            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height) {
+            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height - 100) {
                 if !isLoading && currentPage < pageCount {
                     self.loadChannels(page: currentPage + 1)
                 }
