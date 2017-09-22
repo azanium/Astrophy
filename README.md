@@ -8,6 +8,9 @@ This is a app for iOS using Swift 3.x for proof of concept of Astro TV Programmi
 The architecture is using VIP (View Interactor Presenter) clean architecture with template from 
 http://clean-swift.com
 
+# Development Time
+3 days
+
 # Git branching model
 http://nvie.com/posts/a-successful-git-branching-model/
 
