@@ -85,45 +85,47 @@ class ChannelsInteractor: ChannelsBusinessLogic, ChannelsDataStore
     }
     
     func addFavoriteChannel(request: Channels.Favorite.Request) {
-        let pref = Preferences.getPreferences()
         
-        var found = false
+        DispatchQueue.main.async {
         
-        for fav in pref.favorites {
-            if fav.channelId == request.meta.channelId {
-                found = true
-                break
+            do {
+                let realm = try! Realm()
+                
+                try realm.write {
+                    realm.add(request.meta.clone(), update: true)
+                }
             }
+            catch let error as NSError {
+                fatalError(error.localizedDescription)
+            }
+            
+            let response = Channels.Favorite.Response()
+            self.presenter?.presentFavoritesChanged(response: response)
+            
         }
         
-        if !found {
-            Preferences.write {
-                pref.favorites.append(request.meta)
-            }
-            pref.save()
-        }
-        
-        let response = Channels.Favorite.Response()
-        self.presenter?.presentFavoritesChanged(response: response)
     }
     
     func removeFavoriteChannel(request: Channels.Favorite.Request) {
-        let pref = Preferences.getPreferences()
         
-        let favorites = List<ChannelMeta>()
-        for fav in pref.favorites {
-            if fav.channelId != request.meta.channelId {
-                favorites.append(fav)
+        DispatchQueue.main.async {
+            
+            do {
+                let realm = try! Realm()
+                
+                if let obj = realm.object(ofType: ChannelMeta.self, forPrimaryKey: request.meta.channelId) {
+                    try realm.write {
+                        realm.delete(obj)
+                    }
+                }
             }
+            catch let error as NSError {
+                fatalError(error.localizedDescription)
+            }
+            
+            let response = Channels.Favorite.Response()
+            self.presenter?.presentFavoritesChanged(response: response)
+            
         }
-        
-        Preferences.write {
-            pref.favorites = favorites
-        }
-        
-        pref.save()
-        
-        let response = Channels.Favorite.Response()
-        self.presenter?.presentFavoritesChanged(response: response)
     }
 }

@@ -131,6 +131,9 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
     {
         super.viewDidLoad()
         
+        let (hour, minute) = DateUtils.currentTime()
+        self.displayedSeekTime = SeekTime(hour: hour, minute: minute)
+        
         setupUI()
         
         setupTableRowBindings()

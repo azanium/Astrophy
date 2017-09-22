@@ -216,19 +216,8 @@ extension MainViewController : UITableViewDelegate {
                 }
                 cell.favoriteButton.isSelected = true
                 cell.favoriteChanged = { favButton in
-                    
-                    let pref = Preferences.getPreferences()
-                    
-                    Preferences.write {
-                        if pref.getFavoriteIndex(of: meta) > -1 {
-                            pref.favorites.remove(objectAtIndex: index)
-                        }
-                    }
-                    
-                    pref.save()
-                    
-                    // Refetch the favorites to update
-                    self.fetchFavorites()
+                    let request = Main.Favorite.Request(meta: meta)
+                    self.interactor?.removeFavoriteChannel(request: request)
                 }
             }
             .disposed(by: disposeBag)

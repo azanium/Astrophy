@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol MainPresentationLogic
 {
@@ -26,35 +27,8 @@ class MainPresenter: MainPresentationLogic
     
     func presentFavorites(response: Main.Favorite.Response)
     {
-        var metas = [ChannelMeta]()
-        
-        let pref = Preferences.getPreferences()
-        for fav in pref.favorites {
-            metas += [fav]
-        }
-        
-        print("favorites: \(pref.favorites)")
-        
-        let viewModel = Main.Favorite.ViewModel(metas: metas)
+        let viewModel = Main.Favorite.ViewModel(metas: response.metas)
         self.viewController?.displayFavorites(viewModel: viewModel)
-        
-        /*DispatchQueue.global().async {
-            
-            /*for meta in response.metas {
-                for fav in pref.favorites {
-                    if meta.channelId == fav.channelId {
-                        meta.isFavorite = true
-                        metas += [meta]
-                        break
-                    }
-                }
-            }*/
-            
-            
-            DispatchQueue.main.async {
-                
-            }
-        }*/
     }
     
     func presentFavoritesError(response: Main.Error.Response) {

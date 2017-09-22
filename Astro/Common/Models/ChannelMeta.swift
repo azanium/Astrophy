@@ -43,4 +43,18 @@ open class ChannelMeta: Object {
     override open static func ignoredProperties() -> [String] {
       return ["extRef", "isFavorite"]
     }
+    
+    open func clone() -> ChannelMeta {
+        let result = ChannelMeta()
+        result.channelId = channelId
+        result.siChannelId = siChannelId
+        result.channelTitle = channelTitle
+        result.channelDescription = channelDescription
+        result.channelLanguage = channelLanguage
+        result.channelCategory = channelCategory
+        result.channelStubNumber = channelStubNumber
+        result.defaultLogo = defaultLogo
+        
+        return result
+    }
 }

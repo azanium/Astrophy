@@ -11,12 +11,14 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol MainBusinessLogic
 {
     func fetchFavorites(request: Main.Favorite.Request)
     func sortChannelNumbers(ascending: Bool)
     func sortChannelNames(ascending: Bool)
+    func removeFavoriteChannel(request: Main.Favorite.Request)
 }
 
 protocol MainDataStore
@@ -33,45 +35,23 @@ class MainInteractor: MainBusinessLogic, MainDataStore
     // MARK: Do something
     
     func fetchFavorites(request: Main.Favorite.Request) {
-        
-        let resp = Main.Favorite.Response()
-        self.presenter?.presentFavorites(response: resp)
-        
-        /*
-         TODO: v2
-         worker?.fetchChannels(onCompletionHandler: { [weak self] (response) in
-            
-            switch response {
-            case .success(let channels):
-                var ids = [String]()
-                for ch in channels {
-                    ids += [String(ch.id)]
-                }
-                let idList = ids.joined(separator: ",")
-                self?.fetchMetadata(ids: idList)
-                
-            case .error(let message):
-                let response = Main.Error.Response(message: message)
-                self?.presenter?.presentFavoritesError(response: response)
-            }
-            
-        })*/
-    }
-    
-    func fetchMetadata(ids: String) {
-        
-        worker?.fetchChannelMetas(ids: ids) { [weak self] (response) in
-            switch response {
-            case .success(let channelMetas):
-                self?.channelMetas = channelMetas
-                let resp = Main.Favorite.Response(metas: channelMetas)
-                self?.presenter?.presentFavorites(response: resp)
-                
-            case .error(let message):
-                let resp = Main.Error.Response(message: message)
-                self?.presenter?.presentFavoritesError(response: resp)
-            }
+        var favorites: Results<ChannelMeta>!
+        do {
+            let realm = try Realm()
+            favorites = realm.objects(ChannelMeta.self)
         }
+        catch let error as NSError {
+            fatalError(error.localizedDescription)
+        }
+        
+        channelMetas = [ChannelMeta]()
+        
+        for fav in favorites {
+            channelMetas += [fav]
+        }
+        
+        let resp = Main.Favorite.Response(metas: channelMetas)
+        self.presenter?.presentFavorites(response: resp)
     }
     
     func sortChannelNumbers(ascending: Bool) {
@@ -84,5 +64,24 @@ class MainInteractor: MainBusinessLogic, MainDataStore
         channelMetas.sort { ascending ? $0.0.channelTitle < $0.1.channelTitle : $0.0.channelTitle > $0.1.channelTitle }
         let response = Main.Favorite.Response(metas: channelMetas)
         self.presenter?.presentFavorites(response: response)
+    }
+    
+    func removeFavoriteChannel(request: Main.Favorite.Request) {
+        DispatchQueue.main.async {
+            do {
+                let realm = try! Realm()
+                
+                if let obj = realm.object(ofType: ChannelMeta.self, forPrimaryKey: request.meta.channelId) {
+                    try realm.write {
+                        realm.delete(obj)
+                    }
+                }
+            }
+            catch let error as NSError {
+                fatalError(error.localizedDescription)
+            }
+            
+            self.fetchFavorites(request: request)
+        }
     }
 }

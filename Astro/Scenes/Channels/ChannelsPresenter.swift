@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol ChannelsPresentationLogic
 {
@@ -33,25 +34,28 @@ class ChannelsPresenter: ChannelsPresentationLogic
     }
     
     func presentChannelMetas(response: Channels.Metadata.Response) {
+        var favorites: Results<ChannelMeta>!
+        do {
+            let realm = try Realm()
+            favorites = realm.objects(ChannelMeta.self)
+        }
+        catch let error as NSError {
+            fatalError(error.localizedDescription)
+        }
         
-        DispatchQueue.global().async {
-            
-            let pref = Preferences.getPreferences()
+        if let favorites = favorites {
             for meta in response.metas {
-                for fav in pref.favorites {
+                for fav in favorites {
                     if meta.channelId == fav.channelId {
                         meta.isFavorite = true
                         break
                     }
                 }
             }
-            
-            DispatchQueue.main.async {
-                let viewModel = Channels.Metadata.ViewModel(metas: response.metas)
-                self.viewController?.displayChannelMetas(viewModel: viewModel)
-            }
         }
         
+        let viewModel = Channels.Metadata.ViewModel(metas: response.metas)
+        self.viewController?.displayChannelMetas(viewModel: viewModel)
     }
     
     func presentChannelsError(response: Channels.Error.Response) {
