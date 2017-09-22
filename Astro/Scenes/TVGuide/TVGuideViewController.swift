@@ -171,9 +171,10 @@ class TVGuideViewController: UIViewController, TVGuideDisplayLogic
         
         self.spinner.stopAnimating()
         
-        for channel in viewModel.channels {
+        displayedChannels.value = viewModel.channels
+        /*for channel in viewModel.channels {
             displayedChannels.value.append(channel)
-        }
+        }*/
         
         currentPage = viewModel.currentPage
         pageCount = viewModel.pageCount
@@ -249,7 +250,7 @@ extension TVGuideViewController : UITableViewDelegate {
                     cell.assignProgrammes(programmes)
                 }
                 
-                cell.channelTitleLabel.text = meta.channelTitle
+                cell.channelTitleLabel.text = "\(meta.channelStubNumber)\n\(meta.channelTitle)"
                 
                 if meta.defaultLogo != "" {
                     let imageUrl = URL(string: meta.defaultLogo)!

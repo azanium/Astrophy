@@ -170,14 +170,15 @@ class TVGuideCell: UITableViewCell {
     }
     
     func seekTime(hour: Int, minute: Int) {
-        let posX = (hour  + (minute / 60)) * 120
+        let posX = (hour * 60 + minute) * 2 
+        print("seeking: \(hour):\(minute) => posX: \(posX)")
         scrollView.setContentOffset(CGPoint(x: posX, y: 0), animated: false)
     }
 }
 
 extension TVGuideCell : UIScrollViewDelegate {
-    /*
-     We don't need to know the position of programme time for now
+    
+     //We don't need to know the position of programme time for now
      func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let posX = min(max(scrollView.contentOffset.x, 0), 120 * 24)
         let hourComma = posX / 120
@@ -185,6 +186,8 @@ extension TVGuideCell : UIScrollViewDelegate {
         let minutes = Int(min(round(minutesFrac * 60), 59))
         let hour = Int(floor(hourComma))
         let time = hour >= 24 ? "00:00" : String(format: "%02d:%02d", arguments: [hour, minutes])
-    }*/
+        
+        print("programmeSeek: \(time)")
+    }
 }
 

@@ -21,9 +21,10 @@ class DateUtils {
     static func currentTime() -> (Int, Int) {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.hour, .minute], from: Date())
-        let hour = components.hour!
-        let minute = components.minute!
-        return (hour, minute)
+        if let hour = components.hour, let minute = components.minute {
+            return (hour, minute)
+        }
+        return (0, 0)
     }
     
     static func UTCToLocalAMPM(date: String) -> String {

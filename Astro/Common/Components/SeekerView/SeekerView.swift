@@ -15,7 +15,7 @@ class SeekerView: UIView {
     typealias SeekerTimeChangedHandler = (SeekerView, String, Int, Int)->Void
     
     fileprivate var scrollView = UIScrollView()
-    fileprivate let times = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00PM", "20:00", "21:00", "22:00", "23:00", "00:00"]
+    fileprivate let times = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "00:00"]
     fileprivate var timeViews = [SeekerTimeView]()
     fileprivate var nowLabel = UILabel()
     fileprivate var seekerView = UIView()
@@ -106,11 +106,12 @@ class SeekerView: UIView {
         seekerView.backgroundColor = UIColor(hex: "#04a9f3")
         
         let (hour, minute) = DateUtils.currentTime()
+        print("Current Time: \(hour):\(minute)")
         seekTime(hour: hour, minute: minute)
     }
     
     func seekTime(hour: Int, minute: Int) {
-        let posX = (hour  + (minute / 60)) * 120
+        let posX = (hour * 60 + minute)
         scrollView.setContentOffset(CGPoint(x: posX, y: 0), animated: true)
     }
 }
